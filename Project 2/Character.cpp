@@ -3,6 +3,7 @@
 #include <string>
 #include <time.h>
 #include <random>
+#include <cstdlib>
 
 using namespace std;
 // CONSTRUCTORS
@@ -28,10 +29,10 @@ Character::Character(string name, string role, int health, int bonusAttack, int 
 {
    this->name = name;
    this->role = role;
-   this->health = health;
-   this->bonusAttack = bonusAttack;
-   this->bonusDamage = bonusDamage;
-   this->armorClass = armorClass;
+   this->health = abs(health); // Taking absolute value to prevent negative stats!
+   this->bonusAttack = abs(bonusAttack);
+   this->bonusDamage = abs(bonusDamage);
+   this->armorClass = abs(armorClass);
 }
 // ATTACKS/BATTLE FUNCTIONS
 void Character::attack(Character &other)

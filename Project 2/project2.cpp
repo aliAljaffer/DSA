@@ -64,8 +64,10 @@ int getIntInput(string prompt)
 //----------------------------------------------------------------
 void printSummary(Character &c)
 {
-   cout << "Character summary" << endl
-        << "-----------------" << endl;
+   cout
+       << "\n-----------------"
+       << "\nCharacter summary" << endl
+       << "-----------------" << endl;
    c.print(cout);
    cout << endl;
 }
@@ -110,9 +112,9 @@ Character fight(Character &one, Character &two)
       one.attack(two);
       this_thread::sleep_for(std::chrono::milliseconds(1000)); // leaving 1 second inbetween attacks to better follow the fight
       if (two.getHealth() == 0)                                // checking two's HP before allowing it to attack. this prevents two from attacking while having 0 HP.
-         break;
+         return one;                                           // returns the winner which is one in this case
       two.attack(one);
       this_thread::sleep_for(std::chrono::milliseconds(1000));
    }
-   return (one > two) ? one : two; // overloaded operator > to allow for character comparison on hit points.
+   return two; // Only case where we'd be outside the while-loop is if two kills one, since we check two's health after they get attacked by one
 }
