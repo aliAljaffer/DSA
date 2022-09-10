@@ -5,12 +5,11 @@
 #include <random>
 
 using namespace std;
-
 // CONSTRUCTORS
 Character::Character() // random values
 {
-   name = "Test";
-   role = "Bot";
+   name = "Test Bot";
+   role = "A.I.";
    health = (rand() % 100) + 1;
    bonusAttack = (rand() % 20) + 1;
    bonusDamage = (rand() % 10) + 1;
@@ -93,4 +92,10 @@ string Character::getName()
 string Character::getRole()
 {
    return role;
+}
+
+// SETTERS
+void Character::setName(string name)
+{
+   this->name = name;
 }

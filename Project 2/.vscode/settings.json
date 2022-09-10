@@ -45,6 +45,11 @@
       "cwd": "c:\\Users\\Ali\\Desktop\\VSCode projects\\CS3100-P2",
       "binaryPath": "c:\\Users\\Ali\\Desktop\\VSCode projects\\CS3100-P2\\main.exe",
       "binaryArgs": []
+    },
+    {
+      "cwd": "c:\\Users\\Ali\\Desktop\\VSCode projects\\CS3100-PROJECTS\\Project 2",
+      "binaryPath": "c:\\Users\\Ali\\Desktop\\VSCode projects\\CS3100-PROJECTS\\Project 2\\main.exe",
+      "binaryArgs": []
     }
   ]
 }

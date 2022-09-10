@@ -22,6 +22,8 @@ int main()
    printSummary(firstCharacter);
    this_thread::sleep_for(std::chrono::milliseconds(10)); // allowing time to pass for rng
    Character secondCharacter = charCreator();
+   if (firstCharacter.getName() == secondCharacter.getName())
+      secondCharacter.setName(secondCharacter.getName() + " (2)"); // in case 2 bots are chosen
    printSummary(secondCharacter);
 
    // Fighting and assigning the winner
@@ -77,6 +79,10 @@ void printSummary(Character &c)
 //----------------------------------------------------------------
 Character charCreator()
 {
+   // extra functionality: uses the no arg constructor to create a bot character with random stats
+   string input = getStringInput("Would you like to randomize the character's attributes? (y/n)");
+   if (input[0] == 'y' || input[0] == 'Y')
+      return Character();
    // Character creation process in a single function, to av
    string name = getStringInput("Character name?");
    string role = getStringInput(name + "'s role?");
@@ -103,10 +109,10 @@ Character fight(Character &one, Character &two)
    {
       one.attack(two);
       this_thread::sleep_for(std::chrono::milliseconds(1000)); // leaving 1 second inbetween attacks to better follow the fight
-      if (two.getHealth() == 0)                                // checking two's HP before allowing it to attack. this prevents them from attacking while having 0 HP.
+      if (two.getHealth() == 0)                                // checking two's HP before allowing it to attack. this prevents two from attacking while having 0 HP.
          break;
       two.attack(one);
       this_thread::sleep_for(std::chrono::milliseconds(1000));
    }
-   return (one > two) ? one : two; // overloaded operator > to allow for character comparison
+   return (one > two) ? one : two; // overloaded operator > to allow for character comparison on hit points.
 }

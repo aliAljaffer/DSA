@@ -22,4 +22,5 @@ public:
    Character(std::string, std::string, int, int, int, int);
    Character(std::string); // given a name, randomizes other attributes
    bool operator>(const Character &);
+   void setName(std::string);
 };
