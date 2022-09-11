@@ -88,6 +88,10 @@ Character charCreator()
    // Character creation process in a single function, to av
    string name = getStringInput("Character name?");
    string role = getStringInput(name + "'s role?");
+   cout << "-----------------\n"
+        << "Inputting 0 for any of the attributes" << endl
+        << "will result in a randomized number"
+        << "\n-----------------" << endl;
    int health = getIntInput(name + "'s hit points?");
    int bonusAttack = getIntInput(name + "'s attack bonus?");
    int bonusDamage = getIntInput(name + "'s damage bonus?");
@@ -107,7 +111,7 @@ Character charCreator()
 
 Character fight(Character &one, Character &two)
 {
-   while (one.getHealth() > 0 && two.getHealth() > 0) // keep attacking while both are alive
+   while (one.getHealth() > 0 && two.getHealth() > 0) // keep attacking while both are alive.
    {
       one.attack(two);
       this_thread::sleep_for(std::chrono::milliseconds(1000)); // leaving 1 second inbetween attacks to better follow the fight

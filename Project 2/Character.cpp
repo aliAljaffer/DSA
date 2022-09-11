@@ -29,10 +29,10 @@ Character::Character(string name, string role, int health, int bonusAttack, int 
 {
    this->name = name;
    this->role = role;
-   this->health = abs(health); // Taking absolute value to prevent negative stats!
-   this->bonusAttack = abs(bonusAttack);
-   this->bonusDamage = abs(bonusDamage);
-   this->armorClass = abs(armorClass);
+   this->health = (health == 0) ? (rand() % 100) + 1 : abs(health); // To prevent starting with 0 health and/or using negative values.
+   this->bonusAttack = (bonusAttack == 0) ? (rand() % 20) + 1 : abs(bonusAttack);
+   this->bonusDamage = (bonusDamage == 0) ? (rand() % 10) + 1 : abs(bonusDamage);
+   this->armorClass = (armorClass == 0) ? (rand() % 15) + 1 : abs(armorClass);
 }
 // ATTACKS/BATTLE FUNCTIONS
 void Character::attack(Character &other)
