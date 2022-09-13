@@ -7,7 +7,8 @@
 
 using namespace std;
 // CONSTRUCTORS
-Character::Character() // random values
+// random values constructor
+Character::Character()
 {
    name = "Test Bot";
    role = "A.I.";
@@ -16,7 +17,8 @@ Character::Character() // random values
    bonusDamage = (rand() % 10) + 1;
    armorClass = (rand() % 15) + 1;
 }
-Character::Character(string name) // random values, but given name.
+// random values, but given name.
+Character::Character(string name)
 {
    this->name = name;
    role = "randomPerson";
@@ -29,7 +31,8 @@ Character::Character(string name, string role, int health, int bonusAttack, int 
 {
    this->name = name;
    this->role = role;
-   this->health = (health == 0) ? (rand() % 100) + 1 : abs(health); // To prevent starting with 0 health and/or using negative values.
+   // To prevent starting with 0 health and/or using negative values.
+   this->health = (health == 0) ? (rand() % 100) + 1 : abs(health);
    this->bonusAttack = (bonusAttack == 0) ? (rand() % 20) + 1 : abs(bonusAttack);
    this->bonusDamage = (bonusDamage == 0) ? (rand() % 10) + 1 : abs(bonusDamage);
    this->armorClass = (armorClass == 0) ? (rand() % 15) + 1 : abs(armorClass);
@@ -37,14 +40,18 @@ Character::Character(string name, string role, int health, int bonusAttack, int 
 // ATTACKS/BATTLE FUNCTIONS
 void Character::attack(Character &other)
 {
-   cout << this->name << " attacks!" << endl; // Announcement
-
-   int attackRoll = (rand() % 20) + 1;                                                                                                          // 1-20 roll.
-   string attackPrint = "Attack Roll: " + to_string(attackRoll) + " + " + to_string(bonusAttack) + " = " + to_string(attackRoll + bonusAttack); // string to print
-   if (attackRoll + bonusAttack >= other.armorClass)                                                                                            // checking if attack hits or misses
+   // Announcement
+   cout << this->name << " attacks!" << endl;
+   // 1-20 roll.
+   int attackRoll = (rand() % 20) + 1;
+   // string to print
+   string attackPrint = "Attack Roll: " + to_string(attackRoll) + " + " + to_string(bonusAttack) + " = " + to_string(attackRoll + bonusAttack);
+   // checking if attack hits or misses
+   if (attackRoll + bonusAttack >= other.armorClass)
    {
       cout << attackPrint << " --> HIT!" << endl;
-      int actualAttack = bonusDamage + (rand() % 10) + 1; // rolling 1-10 then adding bonus damage
+      // rolling 1-10 then adding bonus damage
+      int actualAttack = bonusDamage + (rand() % 10) + 1;
       string damagePrint = "Damage: " + to_string(actualAttack - bonusDamage) + " + " + to_string(bonusDamage) + " = " + to_string(actualAttack);
 
       other.damage(actualAttack);
@@ -78,7 +85,8 @@ void Character::print(ostream &os)
 // OPERATOR OVERLOADS
 bool Character::operator>(const Character &o)
 {
-   return health > o.health; // comparing two characters is just comparing their hit points
+   // comparing two characters is just comparing their hit points
+   return health > o.health;
 }
 
 // GETTERS
