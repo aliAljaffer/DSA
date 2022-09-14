@@ -1,9 +1,6 @@
 #include "Character.h"
 #include <iostream>
 #include <string>
-#include <chrono>
-#include <thread>
-// Including chrono + thread to use the thread sleep function
 using namespace std;
 
 void printSummary(Character &);
@@ -20,7 +17,6 @@ int main()
    // Character creation
    Character firstCharacter = charCreator();
    printSummary(firstCharacter);
-   this_thread::sleep_for(std::chrono::milliseconds(10)); // allowing time to pass for rng
    Character secondCharacter = charCreator();
    if (firstCharacter.getName() == secondCharacter.getName())
       secondCharacter.setName(secondCharacter.getName() + " (2)"); // in case 2 bots are chosen
@@ -114,11 +110,12 @@ Character fight(Character &one, Character &two)
    while (one.getHealth() > 0 && two.getHealth() > 0) // keep attacking while both are alive.
    {
       one.attack(two);
-      this_thread::sleep_for(std::chrono::milliseconds(1000)); // leaving 1 second inbetween attacks to better follow the fight
-      if (two.getHealth() == 0)                                // checking two's HP before allowing it to attack. this prevents two from attacking while having 0 HP.
-         return one;                                           // returns the winner which is one in this case
+      if (two.getHealth() == 0)
+         return one;
+      // ^ checking two's HP before allowing it to attack. this prevents two from
+      // attacking while having 0 HP.
+      // if two is dead, returns the winner, one.
       two.attack(one);
-      this_thread::sleep_for(std::chrono::milliseconds(1000));
    }
    return two; // Only case where we'd be outside the while-loop is if two kills one, since we check two's health after they get attacked by one
 }
