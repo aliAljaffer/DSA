@@ -12,7 +12,7 @@ private:
    int armorClass;
 
 public:
-   void attack(Character &); // making this return bool to know if attack hit or missed.
+   void attack(Character *); // making this return bool to know if attack hit or missed.
    void print(std::ostream &);
    void damage(int);
    int getHealth();
@@ -21,6 +21,6 @@ public:
    Character(); // no args. all fields randomized
    Character(std::string, std::string, int, int, int, int);
    Character(std::string); // given a name, randomizes other attributes
-   bool operator>(const Character &);
+   bool operator>(const Character *);
    void setName(std::string);
 };

@@ -38,7 +38,7 @@ Character::Character(string name, string role, int health, int bonusAttack, int 
    this->armorClass = (armorClass == 0) ? (rand() % 15) + 1 : abs(armorClass);
 }
 // ATTACKS/BATTLE FUNCTIONS
-void Character::attack(Character &other)
+void Character::attack(Character *other)
 {
    // Announcement
    cout << this->name << " attacks!" << endl;
@@ -47,16 +47,16 @@ void Character::attack(Character &other)
    // string to print
    string attackPrint = "Attack Roll: " + to_string(attackRoll) + " + " + to_string(bonusAttack) + " = " + to_string(attackRoll + bonusAttack);
    // checking if attack hits or misses
-   if (attackRoll + bonusAttack >= other.armorClass)
+   if (attackRoll + bonusAttack >= other->armorClass)
    {
       cout << attackPrint << " --> HIT!" << endl;
       // rolling 1-10 then adding bonus damage
       int actualAttack = bonusDamage + (rand() % 10) + 1;
       string damagePrint = "Damage: " + to_string(actualAttack - bonusDamage) + " + " + to_string(bonusDamage) + " = " + to_string(actualAttack);
 
-      other.damage(actualAttack);
+      other->damage(actualAttack);
       cout << damagePrint << endl;
-      cout << other.getName() << " has " << other.getHealth() << " hit points remaining." << endl
+      cout << other->getName() << " has " << other->getHealth() << " hit points remaining." << endl
            << endl;
    }
    else
@@ -83,10 +83,10 @@ void Character::print(ostream &os)
 }
 
 // OPERATOR OVERLOADS
-bool Character::operator>(const Character &o)
+bool Character::operator>(const Character *o)
 {
    // comparing two characters is just comparing their hit points
-   return health > o.health;
+   return health > o->health;
 }
 
 // GETTERS
