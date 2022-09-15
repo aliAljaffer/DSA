@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <time.h>
+#pragma once
 using namespace std;
 
 void printSummary(Character *);
@@ -19,13 +20,13 @@ int main()
    Character *firstCharacter = charCreator();
    printSummary(firstCharacter);
    Character *secondCharacter = charCreator();
-   if (firstCharacter->getName() == secondCharacter->getName())
-      secondCharacter->setName(secondCharacter->getName() + " (2)"); // in case 2 bots are chosen
    printSummary(secondCharacter);
 
    // Fighting and assigning the winner
    Character *winner = fight(firstCharacter, secondCharacter);
    cout << winner->getName() << " wins!" << endl;
+
+   // Program end
    delete firstCharacter;
    delete secondCharacter;
    return 1;
@@ -81,11 +82,6 @@ void printSummary(Character *c)
 //----------------------------------------------------------------
 Character *charCreator()
 {
-   // extra functionality: uses the no arg constructor to create a bot character with random stats
-   string input = getStringInput("Would you like to randomize the character's attributes? (y/n)");
-   if (input[0] == 'y' || input[0] == 'Y')
-      return new Character();
-   // Character creation process in a single function, to av
    string name = getStringInput("Character name?");
    string role = getStringInput(name + "'s role?");
    cout << "-----------------\n"

@@ -17,16 +17,7 @@ Character::Character()
    bonusDamage = (rand() % 10) + 1;
    armorClass = (rand() % 15) + 1;
 }
-// random values, but given name.
-Character::Character(string name)
-{
-   this->name = name;
-   role = "randomPerson";
-   health = (rand() % 100) + 1;
-   bonusAttack = (rand() % 20) + 1;
-   bonusDamage = (rand() % 10) + 1;
-   armorClass = (rand() % 15) + 1;
-}
+
 Character::Character(string name, string role, int health, int bonusAttack, int bonusDamage, int armorClass)
 {
    this->name = name;
@@ -38,6 +29,13 @@ Character::Character(string name, string role, int health, int bonusAttack, int 
    this->armorClass = (armorClass == 0) ? (rand() % 15) + 1 : abs(armorClass);
 }
 // ATTACKS/BATTLE FUNCTIONS
+//----------------------------------------------------------------
+// attack: this attacks other
+//
+//    Returns:  none
+//    Parameters:
+//       Character* other -The character being attacked
+//----------------------------------------------------------------
 void Character::attack(Character *other)
 {
    // Announcement
@@ -64,14 +62,24 @@ void Character::attack(Character *other)
            << endl
            << endl;
 }
-
+//----------------------------------------------------------------
+// damage: Reduces the HP of character that called it by amount
+//    Returns:  none
+//    Parameters:
+//       int amount - the amount to reduce the health by
+//----------------------------------------------------------------
 void Character::damage(int amount)
 {
    // if "amount" would drop HP to negatives, just set it to 0. else subtract normally
    health = (health - amount < 0) ? 0 : health - amount;
 }
 
-// PRINT
+//----------------------------------------------------------------
+// print: prints out the details of the character calling the function
+//    Returns:  none
+//    Parameters:
+//       ostream &os - the output stream to print out to
+//----------------------------------------------------------------
 void Character::print(ostream &os)
 {
    os << "Name: " << name << endl
@@ -80,13 +88,6 @@ void Character::print(ostream &os)
       << "AB: " << bonusAttack << endl // Attack bonus
       << "DB: " << bonusDamage << endl // Damage bonus
       << "AC: " << armorClass << endl; // Armor class
-}
-
-// OPERATOR OVERLOADS
-bool Character::operator>(const Character *o)
-{
-   // comparing two characters is just comparing their hit points
-   return health > o->health;
 }
 
 // GETTERS
