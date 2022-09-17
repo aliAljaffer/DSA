@@ -82,12 +82,15 @@ void Character::damage(int amount)
 //----------------------------------------------------------------
 void Character::print(ostream &os)
 {
-   os << "Name: " << name << endl
-      << "Role: " << role << endl
+   os << "\n-----------------"
+      << "\nCharacter summary" << endl
+      << "-----------------" << endl
+      << "Name: " << name << endl
       << "HP: " << health << endl      // Hit points
       << "AB: " << bonusAttack << endl // Attack bonus
       << "DB: " << bonusDamage << endl // Damage bonus
-      << "AC: " << armorClass << endl; // Armor class
+      << "AC: " << armorClass << "\n"  // Armor class
+      << endl;
 }
 
 // GETTERS

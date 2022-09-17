@@ -5,7 +5,6 @@
 #pragma once
 using namespace std;
 
-void printSummary(Character *);
 int getIntInput(string);
 string getStringInput(string);
 Character *charCreator();
@@ -18,15 +17,17 @@ int main()
 
    // Character creation
    Character *firstCharacter = charCreator();
-   printSummary(firstCharacter);
+   firstCharacter->print(cout);
    Character *secondCharacter = charCreator();
-   printSummary(secondCharacter);
+   secondCharacter->print(cout);
 
    // Fighting and assigning the winner
    Character *winner = fight(firstCharacter, secondCharacter);
-   cout << winner->getName() << " wins!" << endl;
+   cout << winner->getName() << " wins!\n"
+        << endl;
 
    // Program end
+   cout << "Exiting.." << endl;
    delete firstCharacter;
    delete secondCharacter;
    return 1;
@@ -57,41 +58,27 @@ int getIntInput(string prompt)
    cin >> output;
    return output;
 }
-//----------------------------------------------------------------
-// printSummary: A function that utilizes the Character
-//               class' print()
-//    Returns:  nothing. but prints out the summary to cout
-//    Parameters: the Character to be summarised (Character *)
-//----------------------------------------------------------------
-void printSummary(Character *c)
-{
-   cout
-       << "\n-----------------"
-       << "\nCharacter summary" << endl
-       << "-----------------" << endl;
-   c->print(cout);
-   cout << endl;
-}
 
 //----------------------------------------------------------------
 // *charCreator: Creates a character object
 //              using the other input functions to
 //              inquire about the needed data
-//    Returns:  pointer to the newly created character(Character)
+//    Returns:  pointer to the newly created character on the heap(Character)
 //    Parameters: none needed
 //----------------------------------------------------------------
 Character *charCreator()
 {
    string name = getStringInput("Character name?");
    string role = getStringInput(name + "'s role?");
+   string nameAndRole = name + " the " + role;
    cout << "-----------------\n"
         << "Inputting 0 for any of the attributes" << endl
         << "will result in a randomized number"
         << "\n-----------------" << endl;
-   int health = getIntInput(name + "'s hit points?");
-   int bonusAttack = getIntInput(name + "'s attack bonus?");
-   int bonusDamage = getIntInput(name + "'s damage bonus?");
-   int armorClass = getIntInput(name + "'s armor class?");
+   int health = getIntInput(nameAndRole + "'s hit points?");
+   int bonusAttack = getIntInput(nameAndRole + "'s attack bonus?");
+   int bonusDamage = getIntInput(nameAndRole + "'s damage bonus?");
+   int armorClass = getIntInput(nameAndRole + "'s armor class?");
    return new Character(name, role, health, bonusAttack, bonusDamage, armorClass);
 }
 
