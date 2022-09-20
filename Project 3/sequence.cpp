@@ -75,7 +75,8 @@ void Sequence::push_back(const value_type &value)
 {
    SequenceNode *newSqNode = new SequenceNode;
    newSqNode->elt = value;
-   newSqNode->prev = tail->prev;
+   newSqNode->prev = tail;
+   tail->next = newSqNode;
    newSqNode->next = nullptr;
    tail = newSqNode;
    numElts++;
@@ -95,6 +96,14 @@ void Sequence::insert(size_type position, value_type value)
    {
       // throw exception
    }
+   else if (position == 0)
+   {
+      SequenceNode *nodeToAdd = new SequenceNode;
+      nodeToAdd->elt = value;
+      nodeToAdd->next = head;
+      nodeToAdd->prev = nullptr;
+      head = nodeToAdd;
+   }
    else
    {
       SequenceNode *current = head;
@@ -110,8 +119,8 @@ void Sequence::insert(size_type position, value_type value)
       nodeToAdd->prev = current->prev;
       current->prev->next = nodeToAdd;
       current->prev = nodeToAdd;
-      numElts++;
    }
+   numElts++;
 }
 
 const Sequence::value_type &Sequence::front() const
@@ -184,6 +193,17 @@ void Sequence::erase(size_type position, size_type count)
 ostream &operator<<(ostream &os, Sequence &s)
 {
    int currentPos = 0;
+   cout << "[";
+   while (currentPos < s.size())
+   {
+      if (currentPos == s.size() - 1)
+      {
+         cout << s[currentPos] << "]" << endl;
+         break;
+      }
+      cout << s[currentPos] << ", ";
+      currentPos++;
+   }
 }
 // Not needed
 bool Sequence::traverser()
