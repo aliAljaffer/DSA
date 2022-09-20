@@ -8,7 +8,14 @@ int main()
    mySequence.insert(3, 100);
    mySequence.insert(5, 200);
    mySequence.push_back(50);
+   // mySequence.clear();
    // mySequence.traverser();
    // cout << mySequence << endl;
-   cout << mySequence[0] << endl;
+   // mySequence.pop_back();
+   mySequence.push_back(5);
+   cout << mySequence << endl;
+
+   Sequence secondSequence;
+   secondSequence = mySequence;
+   cout << secondSequence << endl;
 }

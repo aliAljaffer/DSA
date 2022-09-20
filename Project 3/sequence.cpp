@@ -57,6 +57,38 @@ Sequence::~Sequence()
 
 Sequence &Sequence::operator=(const Sequence &s)
 {
+   // Kill everything
+   SequenceNode *current = head;
+   SequenceNode *killNext;
+   while (current)
+   {
+      killNext = current->next;
+      delete current;
+      current = killNext;
+   }
+   // Copy from s
+   numElts = s.numElts;
+   head = nullptr;
+   tail = nullptr;
+   SequenceNode *copyNode = s.head;
+   SequenceNode *previous = nullptr;
+   while (copyNode)
+   {
+      SequenceNode *nodeToAdd = new SequenceNode;
+      if (head == nullptr)
+      {
+         head = nodeToAdd;
+      }
+      nodeToAdd->elt = copyNode->elt;
+      nodeToAdd->prev = previous;
+      if (previous != nullptr)
+         previous->next = nodeToAdd;
+      previous = nodeToAdd;
+      copyNode = copyNode->next;
+   }
+   previous->next = nullptr;
+   tail = previous;
+   return (*this);
 }
 
 Sequence::value_type &Sequence::operator[](size_type position)
@@ -80,7 +112,14 @@ void Sequence::push_back(const value_type &value)
    SequenceNode *newSqNode = new SequenceNode;
    newSqNode->elt = value;
    newSqNode->prev = tail;
-   tail->next = newSqNode;
+   if (empty())
+   {
+      head = newSqNode;
+   }
+   else
+   {
+      tail->next = newSqNode;
+   }
    newSqNode->next = nullptr;
    tail = newSqNode;
    numElts++;
@@ -89,7 +128,15 @@ void Sequence::push_back(const value_type &value)
 void Sequence::pop_back()
 {
    SequenceNode *tailPtr = tail;
-   tail = tail->prev;
+   if (numElts == 1)
+   {
+      head = nullptr;
+      tail = nullptr;
+   }
+   else
+   {
+      tail = tail->prev;
+   }
    numElts--;
    delete tailPtr;
 }
@@ -196,6 +243,11 @@ void Sequence::erase(size_type position, size_type count)
 }
 ostream &operator<<(ostream &os, Sequence &s)
 {
+   if (s.empty())
+   {
+      os << "The sequence is empty." << endl;
+      return os;
+   }
    int currentPos = 0;
    os << "[";
    while (currentPos < s.size())

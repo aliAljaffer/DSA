@@ -14,6 +14,8 @@
   "files.associations": {
     "new": "cpp",
     "iostream": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "ostream": "cpp",
+    "string": "cpp"
   }
 }
