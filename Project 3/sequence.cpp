@@ -3,7 +3,7 @@
 Sequence::Sequence(size_type sz)
 {
    this->tail = nullptr;
-   this->numElts = 0;
+   this->numElts = 1;
    SequenceNode *newSqNode = new SequenceNode;
    newSqNode->elt = 0;
    this->head = newSqNode;
@@ -61,6 +61,10 @@ Sequence &Sequence::operator=(const Sequence &s)
 
 Sequence::value_type &Sequence::operator[](size_type position)
 {
+   if (position < 0 || position > numElts - 1)
+   {
+      // throw exception
+   }
    SequenceNode *current = head;
    int currentPos = 0;
    while (currentPos != position)
@@ -193,17 +197,18 @@ void Sequence::erase(size_type position, size_type count)
 ostream &operator<<(ostream &os, Sequence &s)
 {
    int currentPos = 0;
-   cout << "[";
+   os << "[";
    while (currentPos < s.size())
    {
-      if (currentPos == s.size() - 1)
+      if (currentPos == (s.size() - 1)) // When at last index, end with ]
       {
-         cout << s[currentPos] << "]" << endl;
+         os << s[currentPos] << "]" << endl;
          break;
       }
-      cout << s[currentPos] << ", ";
+      os << s[currentPos] << ", ";
       currentPos++;
    }
+   return os;
 }
 // Not needed
 bool Sequence::traverser()

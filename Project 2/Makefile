@@ -1,4 +1,4 @@
-SRC_FILES := $(wildcard *.cpp)
+-SRC_FILES := $(wildcard *.cpp)
 OBJ_FILES := $(patsubst %.cpp,%.o,$(SRC_FILES))
 HEADER_FILES := $(wildcard *.h)
 LDFLAGS := -g -ggdb
