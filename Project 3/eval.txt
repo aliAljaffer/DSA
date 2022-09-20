@@ -1,0 +1,180 @@
+Testing sequence creation and printing
+--------------------------------------
+Sequence:  [100, 200, 300, 0]
+
+Should be: <100, 200, 300, ???>
+
+Points (out of 5):            5
+
+Testing multiple sequences
+--------------------------
+Sequence1: [0, 1, 2]
+
+Sequence2: [100, 101, 102]
+
+Should be: <0, 1, 2>
+           <100, 101, 102>
+
+Points (out of 3):            3
+
+Testing push_back()
+-------------------
+Sequence:  [100, 200, 300, 400, 500]
+
+Should be: <100, 200, 300, 400, 500>
+
+Points (out of 3):            3
+
+Testing push_back() on an empty sequence
+-------------------
+Sequence:  [100, 200, 300, 400, 500]
+
+Should be: <100, 200, 300, 400, 500>
+
+Points (out of 1):            1
+
+Testing pop_back()
+------------------
+Sequence:   [100, 200, 300]
+
+Should be:  <100, 200, 300>
+
+Points (out of 3):            3
+
+Testing pop_back() on an empty sequence
+------------------
+CORRECT: Threw exception: std::exception
+
+Points (out of 1):            1
+
+Testing insert()
+------------------
+Sequence:   [100, 200, 300, 999, 400, 500]
+
+Should be:  <100, 200, 300, 999, 400, 500>
+
+Sequence:   [888, 100, 200, 300, 999, 400, 500]
+
+Should be:  <888, 100, 200, 300, 999, 400, 500>
+
+Sequence:   [888, 100, 200, 300, 999, 400, 777, 500]
+
+Should be:  <888, 100, 200, 300, 999, 400, 777, 500>
+
+Points (out of 3):            3
+
+Testing insert() on an invalid index
+------------------
+CORRECT: Threw exception: std::exception
+
+Points (out of 1):            1
+
+Testing front()
+---------------
+Front:     100
+Sequence:  [100, 200, 300]
+
+Should be: 100
+           <100, 200, 300>
+
+Points (out of 2):            2
+
+Testing front() on an empty sequence
+------------------------------------
+CORRECT: Threw exception: std::exception
+
+Points (out of 1):            1
+
+Testing back()
+---------------
+Back:      300
+Sequence:  [100, 200, 300]
+
+Should be: 300
+           <100, 200, 300>
+
+Points (out of 2):            2
+
+Testing back() on an empty sequence
+------------------------------------
+CORRECT: Threw exception: std::exception
+
+Points (out of 1):            1
+
+Testing empty()
+---------------
+Empty sequence, empty returns: 1
+Non-empty sequence, empty returns: 0
+
+Points (out of 1):            1
+
+Testing size()
+---------------
+Sequence length 7, size returned: 7
+Empty sequence, size returned: 0
+
+Points (out of 2):            2
+
+Testing clear()
+---------------
+Sequence cleared, empty returned: 0
+Size returned:  5
+
+Points (out of 2):            2
+
+Testing erase()
+------------------
+Sequence:   [100, 200, 300, 800, 900, 1000]
+
+Should be:  <100, 200, 300, 800, 900, 1000>
+
+Sequence:   [100, 200, 300, 800]
+
+Should be:  <100, 200, 300, 800>
+
+Sequence:   [300, 800]
+
+Should be:  <300, 800>
+
+Points (out of 3):            3
+
+Testing erase() on invalid parameters
+------------------
+CORRECT: Threw exception: std::exception
+
+Points (out of 1):            1
+
+Testing assignment (=) operator
+------------------
+Data1:      [100, 200, 300, 400, 500]
+
+Data2:      [1, 2, 300, 400, 500]
+
+Should be:  <100, 200, 300, 400, 500>
+            <1, 2, 300, 400, 500>
+
+Points (out of 3):            3
+
+Testing copy constructor
+------------------
+Copied Sequence:        [1, 200, 300, 400, 500]
+
+Original Sequence:      [100, 200, 300, 400, 500]
+
+Should be:              <1, 200, 300, 400, 500>
+                        <100, 200, 300, 400, 500>
+
+Points (out of 3):            3
+
+Testing for memory leaks
+------------------------
+No memory leak found
+*** Error:  memory leak found
+
+Points (out of 3):            3
+
+Programming style and documentation
+-----------------------------------
+Points (out of 5):            5
+
+TOTAL POINTS (out of 50):    50

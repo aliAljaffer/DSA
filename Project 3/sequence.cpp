@@ -1,23 +1,33 @@
 #include "Sequence.h"
+#include <exception>
 
 Sequence::Sequence(size_type sz)
 {
-   this->tail = nullptr;
-   this->numElts = 1;
-   SequenceNode *newSqNode = new SequenceNode;
-   newSqNode->elt = 0;
-   this->head = newSqNode;
-   SequenceNode *current = head;
-   while (this->numElts < sz && sz > 0)
+   if (sz == 0)
    {
-      SequenceNode *nextNode = new SequenceNode;
-      nextNode->elt = 0;
-      current->next = nextNode;
-      nextNode->prev = current;
-      current = nextNode;
-      this->numElts++;
+      head = nullptr;
+      tail = nullptr;
+      numElts = 0;
    }
-   this->tail = current;
+   else
+   {
+      this->tail = nullptr;
+      this->numElts = 1;
+      SequenceNode *newSqNode = new SequenceNode;
+      newSqNode->elt = 0;
+      this->head = newSqNode;
+      SequenceNode *current = head;
+      while (this->numElts < sz && sz > 0)
+      {
+         SequenceNode *nextNode = new SequenceNode;
+         nextNode->elt = 0;
+         current->next = nextNode;
+         nextNode->prev = current;
+         current = nextNode;
+         this->numElts++;
+      }
+      this->tail = current;
+   }
 }
 
 Sequence::Sequence(const Sequence &s)
@@ -34,7 +44,8 @@ Sequence::Sequence(const Sequence &s)
          head = nodeToAdd;
       nodeToAdd->elt = copyNode->elt;
       nodeToAdd->prev = previous;
-      previous->next = nodeToAdd;
+      if (previous != nullptr)
+         previous->next = nodeToAdd;
       previous = nodeToAdd;
       copyNode = copyNode->next;
    }
@@ -57,7 +68,7 @@ Sequence::~Sequence()
 
 Sequence &Sequence::operator=(const Sequence &s)
 {
-   // Kill everything
+   // Kill everything in *this*
    SequenceNode *current = head;
    SequenceNode *killNext;
    while (current)
@@ -88,14 +99,14 @@ Sequence &Sequence::operator=(const Sequence &s)
    }
    previous->next = nullptr;
    tail = previous;
-   return (*this);
+   return *this;
 }
 
 Sequence::value_type &Sequence::operator[](size_type position)
 {
    if (position < 0 || position > numElts - 1)
    {
-      // throw exception
+      throw exception();
    }
    SequenceNode *current = head;
    int currentPos = 0;
@@ -111,14 +122,15 @@ void Sequence::push_back(const value_type &value)
 {
    SequenceNode *newSqNode = new SequenceNode;
    newSqNode->elt = value;
-   newSqNode->prev = tail;
    if (empty())
    {
       head = newSqNode;
+      newSqNode->prev = nullptr;
    }
    else
    {
       tail->next = newSqNode;
+      newSqNode->prev = tail;
    }
    newSqNode->next = nullptr;
    tail = newSqNode;
@@ -133,9 +145,14 @@ void Sequence::pop_back()
       head = nullptr;
       tail = nullptr;
    }
+   else if (empty())
+   {
+      throw exception();
+   }
    else
    {
       tail = tail->prev;
+      tail->next = nullptr;
    }
    numElts--;
    delete tailPtr;
@@ -145,7 +162,7 @@ void Sequence::insert(size_type position, value_type value)
 {
    if (position < 0 || position > numElts - 1)
    {
-      // throw exception
+      throw exception();
    }
    else if (position == 0)
    {
@@ -176,11 +193,15 @@ void Sequence::insert(size_type position, value_type value)
 
 const Sequence::value_type &Sequence::front() const
 {
+   if (empty())
+      throw exception();
    return head->elt;
 }
 
 const Sequence::value_type &Sequence::back() const
 {
+   if (empty())
+      throw exception();
    return tail->elt;
 }
 
@@ -197,6 +218,8 @@ Sequence::size_type Sequence::size() const
 void Sequence::clear()
 {
    // Assuming clear means all values 0
+   if (empty())
+      return;
    SequenceNode *current = head;
    while (current)
    {
@@ -207,9 +230,9 @@ void Sequence::clear()
 
 void Sequence::erase(size_type position, size_type count)
 {
-   if (position + count > numElts || position < 0 || position > numElts - 1 || count <= 0)
+   if (position + count - 1 > numElts || position < 0 || position > numElts - 1 || count <= 0 || empty())
    {
-      // throw exception
+      throw exception();
    }
    else
    {
@@ -231,10 +254,25 @@ void Sequence::erase(size_type position, size_type count)
          current = nextToKill;
          numKilled++;
       }
-      current->prev = savePrevious;
-      savePrevious->next = current;
+      if (position == 0)
+      {
+         head = current;
+         head->prev = nullptr;
+      }
+      else if (current == nullptr)
+      {
+         current = savePrevious;
+         current->next = nullptr;
+         tail = current;
+      }
+      else
+      {
+         current->prev = savePrevious;
+         savePrevious->next = current;
+      }
+
       current = head;
-      while (current)
+      while (current->next)
       {
          current = current->next;
       }
@@ -262,9 +300,11 @@ ostream &operator<<(ostream &os, Sequence &s)
    }
    return os;
 }
-// Not needed
+// Testing connections. If head can reach tail and vice versa. Tests nexts and prevs.
 bool Sequence::traverser()
 {
+   if (empty())
+      throw exception();
    bool reachedTailFromHead = 0;
    bool reachedHeadFromTail = 0;
    SequenceNode *current = head;
