@@ -112,7 +112,7 @@ public:
 
 	void clear();										// clears the sequence returning it to the empty state
 	void erase(size_type p, size_type n = 1); // deletes n number items starting a index position p
-
+	bool traverser();
 	// YOU CAN MODIFY the following private declarations as needed to implement your sequence class
 private:
 	// If you choose to use a linked list, use the following

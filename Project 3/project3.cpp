@@ -4,7 +4,7 @@
 
 int main()
 {
-   Sequence mySequence(5);
+   Sequence mySequence(10);
    mySequence.insert(3, 100);
    cout << "Exiting...";
 }

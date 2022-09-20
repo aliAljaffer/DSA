@@ -183,4 +183,28 @@ void Sequence::erase(size_type position, size_type count)
 }
 ostream &operator<<(ostream &os, Sequence &s)
 {
+   int currentPos = 0;
+}
+// Not needed
+bool Sequence::traverser()
+{
+   bool reachedTailFromHead = 0;
+   bool reachedHeadFromTail = 0;
+   SequenceNode *current = head;
+   cout << "Head to tail:\n";
+   while (current)
+   {
+      cout << current->elt << endl;
+      current = current->next;
+   }
+   reachedTailFromHead = 1;
+   current = tail;
+   cout << "\nTail to head:\n";
+   while (current)
+   {
+      cout << current->elt << endl;
+      current = current->prev;
+   }
+   reachedHeadFromTail = 1;
+   return reachedHeadFromTail && reachedTailFromHead;
 }
