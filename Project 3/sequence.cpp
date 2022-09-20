@@ -22,19 +22,37 @@ Sequence::Sequence(size_type sz)
 
 Sequence::Sequence(const Sequence &s)
 {
-   if (s.head == nullptr)
+   head = nullptr;
+   tail = nullptr;
+   numElts = s.numElts;
+   SequenceNode *copyNode = s.head;
+   SequenceNode *previous = nullptr;
+   while (copyNode)
    {
-      head = nullptr;
-      tail = nullptr;
-      numElts = 0;
+      SequenceNode *nodeToAdd = new SequenceNode;
+      if (head == nullptr)
+         head = nodeToAdd;
+      nodeToAdd->elt = copyNode->elt;
+      nodeToAdd->prev = previous;
+      previous->next = nodeToAdd;
+      previous = nodeToAdd;
+      copyNode = copyNode->next;
    }
-   else
-   {
-   }
+   previous->next = nullptr;
+   tail = previous->next;
 }
 
 Sequence::~Sequence()
 {
+   // this->erase(0, numElts); ?
+   SequenceNode *current = head;
+   SequenceNode *killNext;
+   while (current)
+   {
+      killNext = current->next;
+      delete current;
+      current = killNext;
+   }
 }
 
 Sequence &Sequence::operator=(const Sequence &s)
@@ -43,6 +61,14 @@ Sequence &Sequence::operator=(const Sequence &s)
 
 Sequence::value_type &Sequence::operator[](size_type position)
 {
+   SequenceNode *current = head;
+   int currentPos = 0;
+   while (currentPos != position)
+   {
+      current = current->next;
+      currentPos++;
+   }
+   return current->elt;
 }
 
 void Sequence::push_back(const value_type &value)
@@ -121,8 +147,40 @@ void Sequence::clear()
 
 void Sequence::erase(size_type position, size_type count)
 {
+   if (position + count > numElts || position < 0 || position > numElts - 1 || count <= 0)
+   {
+      // throw exception
+   }
+   else
+   {
+      int currentPos = 0;
+      int numKilled = 0;
+      SequenceNode *current = head;
+      while (currentPos != position)
+      {
+         current = current->next;
+         currentPos++;
+      }
+      SequenceNode *savePrevious = current->prev;
+      SequenceNode *nextToKill;
+      while (numKilled != count)
+      {
+         nextToKill = current->next;
+         delete current;
+         numElts--;
+         current = nextToKill;
+         numKilled++;
+      }
+      current->prev = savePrevious;
+      savePrevious->next = current;
+      current = head;
+      while (current)
+      {
+         current = current->next;
+      }
+      tail = current;
+   }
 }
-
 ostream &operator<<(ostream &os, Sequence &s)
 {
 }
