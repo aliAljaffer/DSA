@@ -1,8 +1,14 @@
 #include "Sequence.h"
 #include <exception>
-
+/* Ali Aljaffer - CS3100 - UID: U01006515
+ * Project 3 - Double linked list
+ * A class that implements the functions specified
+ * in the header file.
+ */
 Sequence::Sequence(size_type sz)
 {
+   if (sz < 0)
+      throw exception();
    if (sz == 0)
    {
       head = nullptr;
@@ -17,7 +23,7 @@ Sequence::Sequence(size_type sz)
       newSqNode->elt = 0;
       this->head = newSqNode;
       SequenceNode *current = head;
-      while (this->numElts < sz && sz > 0)
+      while (this->numElts < sz)
       {
          SequenceNode *nextNode = new SequenceNode;
          nextNode->elt = 0;
@@ -55,7 +61,7 @@ Sequence::Sequence(const Sequence &s)
 
 Sequence::~Sequence()
 {
-   // this->erase(0, numElts); ?
+   // erase(0, numElts) ?
    SequenceNode *current = head;
    SequenceNode *killNext;
    while (current)
@@ -64,6 +70,7 @@ Sequence::~Sequence()
       delete current;
       current = killNext;
    }
+   tail = head = nullptr;
 }
 
 Sequence &Sequence::operator=(const Sequence &s)
@@ -217,67 +224,65 @@ Sequence::size_type Sequence::size() const
 
 void Sequence::clear()
 {
-   // Assuming clear means all values 0
    if (empty())
       return;
-   SequenceNode *current = head;
-   while (current)
-   {
-      current->elt = 0;
-      current = current->next;
-   }
+   erase(0, numElts);
 }
 
 void Sequence::erase(size_type position, size_type count)
 {
+   int currNumElts = numElts;
    if (position + count - 1 > numElts || position < 0 || position > numElts - 1 || count <= 0 || empty())
    {
       throw exception();
    }
-   else
+   int currentPos = 0;
+   int numKilled = 0;
+   SequenceNode *current = head;
+   while (currentPos != position)
    {
-      int currentPos = 0;
-      int numKilled = 0;
-      SequenceNode *current = head;
-      while (currentPos != position)
-      {
-         current = current->next;
-         currentPos++;
-      }
-      SequenceNode *savePrevious = current->prev;
-      SequenceNode *nextToKill;
-      while (numKilled != count)
-      {
-         nextToKill = current->next;
-         delete current;
-         numElts--;
-         current = nextToKill;
-         numKilled++;
-      }
-      if (position == 0)
-      {
-         head = current;
-         head->prev = nullptr;
-      }
-      else if (current == nullptr)
-      {
-         current = savePrevious;
-         current->next = nullptr;
-         tail = current;
-      }
-      else
-      {
-         current->prev = savePrevious;
-         savePrevious->next = current;
-      }
-
-      current = head;
-      while (current->next)
-      {
-         current = current->next;
-      }
+      current = current->next;
+      currentPos++;
+   }
+   SequenceNode *savePrevious = (position != 0) ? current->prev : nullptr;
+   SequenceNode *nextToKill;
+   while (numKilled != count)
+   {
+      nextToKill = current->next;
+      delete current;
+      numElts--;
+      current = nextToKill;
+      numKilled++;
+   }
+   if (position == 0 && count == currNumElts)
+   {
+      head = nullptr;
+      tail = nullptr;
+      return;
+   }
+   else if (position == 0)
+   {
+      head = current;
+      head->prev = nullptr;
+   }
+   else if (current == nullptr)
+   {
+      current = savePrevious;
+      current->next = nullptr;
       tail = current;
    }
+   else
+   {
+      current->prev = savePrevious;
+      savePrevious->next = current;
+   }
+
+   current = head;
+   while (current->next)
+   {
+      current = current->next;
+   }
+   tail = current;
 }
 ostream &operator<<(ostream &os, Sequence &s)
 {
@@ -305,6 +310,7 @@ bool Sequence::traverser()
 {
    if (empty())
       throw exception();
+   cout << "Traversing a sequence of " << numElts << " element(s)." << endl;
    bool reachedTailFromHead = 0;
    bool reachedHeadFromTail = 0;
    SequenceNode *current = head;
