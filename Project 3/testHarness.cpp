@@ -698,8 +698,6 @@
 //       for (int i = 0; i < NUM_MEM_TESTS; i++)
 //       {
 //          memoryLeakTest();
-//          memoryLeakTest();
-//          memoryLeakTest();
 //       }
 //       cout << "Post-memory leak test..." << endl;
 //       system("pause");
@@ -737,11 +735,11 @@
 
 // void memoryLeakTest()
 // {
-//    Sequence s(MEM_TEST_SIZE);
-//    for (int i = 0; i < MEM_TEST_SIZE; i++)
-//    {
-//       s[i] = i;
-//    }
+// Sequence s(MEM_TEST_SIZE);
+// for (int i = 0; i < MEM_TEST_SIZE; i++)
+// {
+//    s[i] = i;
+// }
 // }
 
 // void testCopyConstructor(Sequence s, ostream &os)

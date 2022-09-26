@@ -5,18 +5,22 @@
  * A class that implements the functions specified
  * in the header file.
  */
+/// @brief Parametric constructor for a Sequence
+/// @param sz - the size of the sequence
 Sequence::Sequence(size_type sz)
 {
    if (sz < 0)
       throw exception();
    if (sz == 0)
    {
+      // Case when creating an empty sequence
       head = nullptr;
       tail = nullptr;
       numElts = 0;
    }
    else
    {
+      // Case when creating any sz-sized sequence
       this->tail = nullptr;
       this->numElts = 1;
       SequenceNode *newSqNode = new SequenceNode;
@@ -36,6 +40,8 @@ Sequence::Sequence(size_type sz)
    }
 }
 
+/// @brief Copy constructor
+/// @param s - Reference to the sequence getting copied
 Sequence::Sequence(const Sequence &s)
 {
    head = nullptr;
@@ -59,6 +65,7 @@ Sequence::Sequence(const Sequence &s)
    tail = previous->next;
 }
 
+/// @brief Sequence destructor
 Sequence::~Sequence()
 {
    // erase(0, numElts) ?
@@ -73,17 +80,21 @@ Sequence::~Sequence()
    tail = head = nullptr;
 }
 
+/// @brief Overridden equals operator. Sets the left sided sequence equal to the right sided sequence
+/// @param s - The sequence to copy
+/// @return this - Pointer to the new copy of s
 Sequence &Sequence::operator=(const Sequence &s)
 {
    // Kill everything in *this*
-   SequenceNode *current = head;
-   SequenceNode *killNext;
-   while (current)
-   {
-      killNext = current->next;
-      delete current;
-      current = killNext;
-   }
+   // SequenceNode *current = head;
+   // SequenceNode *killNext;
+   // while (current)
+   // {
+   //    killNext = current->next;
+   //    delete current;
+   //    current = killNext;
+   // }
+   erase(0, numElts);
    // Copy from s
    numElts = s.numElts;
    head = nullptr;
@@ -109,6 +120,9 @@ Sequence &Sequence::operator=(const Sequence &s)
    return *this;
 }
 
+/// @brief Overridden brackets operator enables using indecies to get an element from the sequence
+/// @param position - the position of the element to return
+/// @return elt - the element at the specified position in the sequence
 Sequence::value_type &Sequence::operator[](size_type position)
 {
    if (position < 0 || position > numElts - 1)
@@ -146,15 +160,13 @@ void Sequence::push_back(const value_type &value)
 
 void Sequence::pop_back()
 {
+   if (empty())
+      throw exception();
    SequenceNode *tailPtr = tail;
    if (numElts == 1)
    {
       head = nullptr;
       tail = nullptr;
-   }
-   else if (empty())
-   {
-      throw exception();
    }
    else
    {
@@ -233,9 +245,8 @@ void Sequence::erase(size_type position, size_type count)
 {
    int currNumElts = numElts;
    if (position + count - 1 > numElts || position < 0 || position > numElts - 1 || count <= 0 || empty())
-   {
       throw exception();
-   }
+
    int currentPos = 0;
    int numKilled = 0;
    SequenceNode *current = head;
