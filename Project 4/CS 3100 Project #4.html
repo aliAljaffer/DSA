@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)https://pilot.wright.edu/content/202230-202280/653413-EV202280/Projects/Project4.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS 3100 Project #4</title>
+<link rel="stylesheet" href="./CS 3100 Project #4_files/styles.css" type="text/css">
+
+<script>function lti_launch( vars, target ) {
+						var query = '';
+						var new_tab = false;
+
+						for(var key in vars) {
+							if(query.length == 0) {
+								query += '?' + key + '=' + encodeURIComponent(vars[key]);
+							}
+							else {
+								query += '&' + key + '=' + encodeURIComponent(vars[key]);
+							}
+						}
+
+						var url = '/d2l/customization/pearsonlti/6605/Launch' + query;(target == '_blank') ? window.open( url, '_blank' ) : location.replace( url );}</script><style>undefined</style><script src="./CS 3100 Project #4_files/mathjax.js.download" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					if (document.querySelector('math') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
+						document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
+							elm.setAttribute('style', 'display: block; height: 0.5rem;');
+						});
+
+						window.D2L.MathJax.loadMathJax({
+							'outputScale': 1.3,
+							'renderLatex': false
+						});
+					}
+				});</script><script src="./CS 3100 Project #4_files/prism.js.download" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					document.querySelectorAll('.d2l-code').forEach(code => {
+						window.D2L.Prism.formatCodeElement(code);
+					});
+				});</script><script>window.addEventListener('message', function(event) { 
+					if( !event.data ) {
+						return;
+					}
+
+					var params;
+					try {
+						params = JSON.parse( event.data );
+					}
+					catch {
+						return;
+					}
+					if( !params.subject || params.subject !== 'lti.frameResize' ) {
+						return;
+					}
+
+					const MAX_FRAME_HEIGHT = 10000
+					if( !params.height || params.height < 1 || params.height > MAX_FRAME_HEIGHT ) {
+						console.warn( 'Invalid height value received, aborting' );
+						return;
+					}
+					var el = document.getElementsByTagName( 'iframe' );
+					for ( var i=0; i < el.length; i++ ) {
+						if( el[i].contentWindow === event.source ) {
+							el[i].style.height = params.height + 'px';
+							el[i].style.width = '100%';
+							console.info( 'Setting iFrame height to ' + params.height );
+							console.info( 'Setting iFrame width to 100%' );
+						}
+					}
+				});</script><link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="true"><link rel="preconnect" href="https://fonts.gstatic.com/"><link rel="stylesheet" href="./CS 3100 Project #4_files/css2"></head>
+<body>
+<div id="content">
+<p class="course">CS 3100 – <i>Data Structures and Algorithms</i></p>
+<h1>Project #4 – Indexing with AVL Trees</h1>
+<h2>Learning Objectives</h2>
+<ul>
+<li>Demonstrate effective use of memory management techniques in C++</li>
+<li>Implement a data structure to meet given specifications</li>
+<li>Design, implement, and use an AVL tree data structure</li>
+<li>Analyze operations for time complexity</li>
+</ul>
+<h2>Overview</h2>
+<p>Your task for this assignment is to implement an AVL tree that serves as a <i>map</i> data type (sometimes also called a <i>dictionary</i>.  A map allows you to store and retrieve key/value
+pairs.  For this project, the key will be an integer and the value will be a string.</p>
+<h2>The AVLTree Class</h2>
+<p>The map will be implemented as an AVL tree.  For this project, you must write your own AVL tree - not using code from outside sources.
+Your AVL tree should remain balanced by implementing single and double rotations when inserting new data.  Your tree must support the following operations:
+
+</p><ul>
+    <li><b><tt>bool AVLTree::insert(int key, string value)</tt></b> – Insert a new key/value pair into the tree.  For this assignment the duplicate keys are not allowed.
+	This function should return <b>true</b> if the key/value pair is successfully inserted into the map, and <b>false</b> if the pair could not 
+	be inserted (for example, due to a duplicate key already found in the map).  The time complexity for insert should be O(log<sub>2</sub> <i>n</i>).</li><br>
+	
+	<li><b><tt>int AVLTree::getHeight()</tt></b> – return the height of the AVL tree. The time complexity for getHeight should be O(1).</li><br>
+	
+	<li><b><tt>int AVLTree::getSize()</tt></b> – return the total number of nodes (key/value pairs) in the AVL tree.  The time complexity for getSize should be O(1).</li><br>
+	
+	<li><b><tt>friend ostream&amp; operator&lt;&lt;(ostream&amp; os, const AVLTree&amp; me)</tt></b> ‐ print the tree using the &lt;&lt; operator.  You should overload the &lt;&lt; operator to print the AVL
+	tree “sideways” using indentation to show the structure of the tree.  For example, consider the following AVL tree (each node
+	contains a key, value pair):
+	 <p><img src="./CS 3100 Project #4_files/AVLTree.png" alt="See instructor for details" width="400"></p>
+	 This tree would be printed as follows:
+<blockquote class="code">
+<pre>        50, Fifty
+               45, Forty-five
+40, Forty
+               30, Thirty
+        20, Twenty
+               10, Ten
+</pre>
+</blockquote>
+
+(<i>Note:  If you turn your head sideways, you can see how this represents the tree.</i>)<br>
+(<i>Also note:  This style of printout can be directly implemented as a right-child-first inorder traversal of the tree.</i>)
+</li><br>
+							  
+	<li><b><tt>bool AVLTree::find(int key, string&amp; value)</tt></b> – if the given key is found in the AVL tree, this function should return <b>true</b> and place the
+	corresponding value in <b>value</b>.  Otherwise this function should return <b>false</b> (and the value in <b>value</b> can be anything).  The time complexity for find should be O(log<sub>2</sub> <i>n</i>).</li><br>
+	
+	<li><b><tt>vector&lt;string&gt; AVLTree::findRange(int lowkey, int highkey)</tt></b> – this function should return a C++ vector of strings containing all of the values
+	in the tree with keys ≥ lowkey and ≤ highkey.  For each key found in the given range, there will be one value in the vector.  If no matching key/value pairs are found, the function should return an empty vector.
+	
+	<p><b>Example:</b>  Suppose the call <tt><b>resultVector = myTree.findRange(30, 47)</b></tt> were called on the tree pictured above.  The findRange function would then return a vector containing the strings: {"Thirty", "Fourty", "Forty five"}.</p>
+</li></ul>
+
+<h2>Turn in and Grading</h2>
+<ul>
+<li>The AVLTree class should use a seperate AVLTree.h and AVLTree.cpp file.</li>
+<li>Please zip your entire project directory
+into a single file called project4.zip and upload to the dropbox in Pilot.</li>
+</ul>
+<p>This project is worth 50 points, distributed as follows:</p>
+<table class="table_stripes" border="1" cellspacing="0" cellpadding="0" style="width: 100%;">
+<tbody>
+<tr>
+<td><b>Task</b></td>
+<td style="text-align: center;"><b>Points</b></td>
+</tr>
+<tr>
+<td><b><tt>AVLTree::insert</tt></b> stores key/value pairs in the correct locations
+in the AVLTree, and correctly rejects
+duplicate keys</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td><b><tt>AVLTree::getHeight()</tt></b> correctly returns the height of the tree</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td><b><tt>AVLTree::getSize()</tt></b> correctly returns the number of key/value pairs in
+the tree</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td>The tree maintains correct balance, regardless of the order in which keys are inserted</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr>
+<td><b><tt>operator&lt;&lt;</tt></b> prints the tree in a neat and readable
+manner, using indentation or some other appropriate mechanism to clearly show the structure of the tree</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td><b><tt>AVLTree::find</tt></b> correctly finds and returns key/value pairs in the tree in 
+Θ(log <i>n</i>) time, and
+returns <b>false</b> when no matching key is found</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td><b><tt>AVLTree::findRange</tt></b> correctly returns a C++ vector
+of strings matching keys in the specified range</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td><b><tt>AVLTree::operator=</tt></b> correctly creates an independent copy
+of an AVL tree</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td>Copy constructor correctly creates an independent copy
+of an AVL tree</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr><td>Code has no memory leaks</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td>Code is well organized, well documented, and properly formatted. Variable names are clear, and
+readable.  Your AVLTree class is declared and implemented in separate (.cpp and .h) files.</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</body></html>
