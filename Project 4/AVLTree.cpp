@@ -9,7 +9,7 @@ AVLTree::AVLTree()
    root = nullptr;
 }
 
-AVLTree::AVLTree(TreeNode *root)
+AVLTree::AVLTree(TreeNode *&root)
 {
    size = 0;
    height = 0;
@@ -19,11 +19,16 @@ AVLTree::~AVLTree()
 {
    // Use postorder here
 }
-bool AVLTree::insert(int key, string value)
+
+bool AVLTree::insertBST(int key, string value)
 {
    TreeNode *nodeToInsert = new TreeNode(key, value);
    if (root == nullptr)
+   {
       root = nodeToInsert;
+      return true;
+   }
+
    TreeNode *currentNode = root;
    // Currently this is for bst
    while (currentNode != nullptr)
@@ -34,7 +39,7 @@ bool AVLTree::insert(int key, string value)
          {
 
             currentNode->right = nodeToInsert;
-
+            nodeToInsert->parent = currentNode;
             currentNode = nullptr;
          }
          else
@@ -45,6 +50,7 @@ bool AVLTree::insert(int key, string value)
          if (currentNode->left == nullptr)
          {
             currentNode->left = nodeToInsert;
+            nodeToInsert->parent = currentNode;
             currentNode = nullptr;
          }
          else
@@ -61,12 +67,7 @@ int AVLTree::getSize()
 {
    return size;
 }
-ostream &operator<<(ostream &os, const AVLTree &me)
-{
-}
-AVLTree &AVLTree::operator=(const AVLTree &)
-{
-}
+
 bool AVLTree::find(int key, string &value)
 {
    TreeNode *currentNode = this->root;
@@ -88,26 +89,4 @@ bool AVLTree::find(int key, string &value)
    }
    value = key + " not found";
    return false;
-}
-
-AVLTree::TreeNode *AVLTree::search(int key)
-{
-
-   return nullptr;
-}
-vector<string> AVLTree::findRange(int lowkey, int highkey)
-{
-}
-
-AVLTree::TreeNode *AVLTree::SingleRightRotation(TreeNode *problemNode)
-{
-}
-AVLTree::TreeNode *AVLTree::SingleLeftRotation(TreeNode *problemNode)
-{
-}
-AVLTree::TreeNode *AVLTree::DoubleRightRotation(TreeNode *problemNode)
-{
-}
-AVLTree::TreeNode *AVLTree::DoubleLeftRotation(TreeNode *problemNode)
-{
 }
