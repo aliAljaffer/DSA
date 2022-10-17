@@ -12,8 +12,8 @@ int main()
    // This should print 0, because it returns false (no duplicates allowed):
    cout << tree.insert(50, "Another fifty");
    cout << tree.insert(100, "One hundred");
-   cout << tree.insert(200, "Two hundred"); // single rotate left
-
+   cout << tree.insert(200, "Two hundred") << endl; // single rotate left
+   cout << tree << endl;
    // cout << "hello" << endl;
 
    cout << tree.insert(40, "Fourty");
@@ -29,23 +29,23 @@ int main()
    // cout << "breakpoint" << endl;
    cout << "\n\n";
 
-   // cout << tree << endl;
+   cout << tree << endl;
    // cout << tree.getSize() << endl;   // 9
    // cout << tree.getHeight() << endl; // 3
 
-   string result;
+   // string result;
 
-   cout << tree.find(50, result) << endl;    // 1
-   cout << "finding 50: " << result << endl; // Fifty
+   // cout << tree.find(50, result) << endl;    // 1
+   // cout << "finding 50: " << result << endl; // Fifty
 
-   cout << tree.find(40, result) << endl;    // 1
-   cout << "finding 40: " << result << endl; // Fourty
+   // cout << tree.find(40, result) << endl;    // 1
+   // cout << "finding 40: " << result << endl; // Fourty
 
-   cout << tree.find(175, result) << endl;    // 1
-   cout << "finding 175: " << result << endl; // One hundred seventy-five
+   // cout << tree.find(175, result) << endl;    // 1
+   // cout << "finding 175: " << result << endl; // One hundred seventy-five
 
-   cout << tree.find(600, result) << endl; // 0
-   cout << "finding 600: " << result << endl;
+   // cout << tree.find(600, result) << endl; // 0
+   // cout << "finding 600: " << result << endl;
    // vector<string> vec = tree.findRange(30, 200); // all of it
    // for (vector<string>::iterator it = vec.begin(); it != vec.end(); ++it)
    // {

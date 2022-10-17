@@ -60,8 +60,9 @@ public:
    bool rebalanceTree(TreeNode *);
    int getHeight();
    int getSize();
-   // friend ostream &operator<<(ostream &os, const AVLTree &me);
+   friend ostream &operator<<(ostream &os, const AVLTree &me);
    bool find(int key, string &value);
+   ostream &inorderPrint(ostream &, TreeNode *, int) const;
    // std::vector<string> findRange(int lowkey, int highkey);
    // AVLTree &operator=(const AVLTree &);
    TreeNode *SingleRightRotation(TreeNode *);

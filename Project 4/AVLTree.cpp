@@ -165,6 +165,24 @@ bool AVLTree::find(int key, string &value)
    value = to_string(key) + " not found";
    return 0;
 }
+ostream &operator<<(ostream &os, const AVLTree &me)
+{
+   return me.inorderPrint(os, me.root, 1);
+}
+
+ostream &AVLTree::inorderPrint(ostream &os, TreeNode *node, int depth) const
+{
+   if (!node)
+      return os;
+   // traverse to right child, visit it, then left
+   inorderPrint(os, node->right, depth + 1);
+   string spaces = "";
+   for (int i = 0; i < depth; i++)
+      spaces += "\t";
+   os << spaces << to_string(node->key) << ", " << node->value << endl;
+   inorderPrint(os, node->left, depth + 1);
+   return os;
+}
 void AVLTree::updateNodeHeight(TreeNode *node)
 {
    int leftHeight = -1;
