@@ -53,20 +53,23 @@ private:
 
 public:
    AVLTree();
-   AVLTree(TreeNode *&);
    ~AVLTree();
    // TreeNode *search(int);
-   //  bool insertAVL(int key, string value);
+   bool insert(int key, string value);
    bool insertBST(int key, string value);
-   // bool rebalance(TreeNode *&);
+   bool rebalanceTree(TreeNode *);
    int getHeight();
    int getSize();
    // friend ostream &operator<<(ostream &os, const AVLTree &me);
    bool find(int key, string &value);
    // std::vector<string> findRange(int lowkey, int highkey);
    // AVLTree &operator=(const AVLTree &);
-   // TreeNode *SingleRightRotation(TreeNode *);
-   // TreeNode *SingleLeftRotation(TreeNode *);
+   TreeNode *SingleRightRotation(TreeNode *);
+   TreeNode *SingleLeftRotation(TreeNode *);
    // TreeNode *DoubleRightRotation(TreeNode *);
    // TreeNode *DoubleLeftRotation(TreeNode *);
+   void updateNodeHeight(TreeNode *);
+   int getBalance(TreeNode *);
+   bool replaceChild(TreeNode *, TreeNode *, TreeNode *);
+   bool setChild(TreeNode *, string, TreeNode *);
 };

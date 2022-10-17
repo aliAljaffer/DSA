@@ -7,4 +7,3 @@ main.exe: $(OBJ_FILES)
 	g++ $(LDFLAGS) -o $@ $^
 %.o: %.cpp $(HEADER_FILES)
 	g++ $(CPPFLAGS) -c -o $@ $<
-
