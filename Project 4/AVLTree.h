@@ -54,6 +54,7 @@ private:
 public:
    AVLTree();
    ~AVLTree();
+   AVLTree(const AVLTree &);
    // TreeNode *search(int);
    bool insert(int, string);
    bool insertBST(int, string);
@@ -63,11 +64,13 @@ public:
    friend ostream &operator<<(ostream &, const AVLTree &);
    bool find(int, string &);
    ostream &inorderPrint(ostream &, TreeNode *, int) const;
-   std::vector<string> findRange(int lowkey, int highkey);
+   std::vector<string> findRange(int, int);
+   void findRangeHelper(TreeNode *, int, int, vector<string> &);
    AVLTree &operator=(const AVLTree &);
    void copyHelper(TreeNode *, const AVLTree &);
    TreeNode *SingleRightRotation(TreeNode *);
    TreeNode *SingleLeftRotation(TreeNode *);
+   void bulldozer(TreeNode *);
    void updateNodeHeight(TreeNode *);
    int getBalance(TreeNode *);
    bool replaceChild(TreeNode *, TreeNode *, TreeNode *);

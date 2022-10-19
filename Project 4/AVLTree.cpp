@@ -11,7 +11,18 @@ AVLTree::AVLTree()
 
 AVLTree::~AVLTree()
 {
-   // Use postorder here
+   bulldozer(root);
+}
+// If I kill *this* do I still own the memory?
+AVLTree::AVLTree(const AVLTree &copyMe)
+{
+   if (size)
+      bulldozer(root);
+   size = 0;
+   height = 0;
+   root = nullptr;
+   if (copyMe.size)
+      copyHelper(copyMe.root, copyMe);
 }
 bool AVLTree::insert(int key, string value)
 {
@@ -169,29 +180,49 @@ bool AVLTree::find(int key, string &value)
 
 std::vector<string> AVLTree::findRange(int lowkey, int highkey)
 {
-   vector<string> range_results;
+   if (lowkey > highkey)
+      throw exception();
+   vector<string> rangeResults;
    // If tree is null no point in searching
    if (!getSize())
-      return range_results;
-   string value;
-   for (int i = lowkey; i <= highkey; i++)
-   {
-      if (find(i, value))
-      {
-         range_results.push_back(value);
-      }
-   }
-   return range_results;
+      return rangeResults;
+   findRangeHelper(root, lowkey, highkey, rangeResults);
+   return rangeResults;
 }
+
+void AVLTree::findRangeHelper(TreeNode *node, int lowkey, int highkey, vector<string> &rangeResults)
+{
+   if (!node)
+      return;
+
+   findRangeHelper(node->left, lowkey, highkey, rangeResults);
+   if (node->key >= lowkey && node->key <= highkey)
+      rangeResults.push_back(node->value);
+   findRangeHelper(node->right, lowkey, highkey, rangeResults);
+}
+
 ostream &operator<<(ostream &os, const AVLTree &me)
 {
+   if (!me.size)
+      os << "Tree is empty." << endl;
    return me.inorderPrint(os, me.root, 1);
+}
+
+// tree felling function!
+void AVLTree::bulldozer(TreeNode *node)
+{
+   if (!node)
+      return;
+   bulldozer(node->left);
+   bulldozer(node->right);
+   delete node;
+   size--;
 }
 // Ask about this
 AVLTree &AVLTree::operator=(const AVLTree &copyMe)
 {
    // Remove everything first.
-
+   bulldozer(root);
    copyHelper(copyMe.root, copyMe);
    return *this;
 }

@@ -8,24 +8,31 @@ int main()
 {
 
    AVLTree tree;
-   tree.insert(9, "Nine");
-   tree.insert(12, "");
+   // cout << tree << endl;
+   tree.insert(40, "Forty");
+   tree.insert(50, "Fifty");
    tree.insert(20, "Twenty");
-   tree.insert(35, "Thirty Five");
-   tree.insert(45, "I love fay");
-
-   // vector<string> myVector = tree.findRange(0, 50);
-   // for (auto i = myVector.begin(); i != myVector.end(); i++)
-   //    cout << *i << endl;
+   tree.insert(10, "Ten");
+   tree.insert(45, "Forty Five");
+   tree.insert(30, "Thirty");
+   // vector<string> myVector = tree.findRange(50, 47);
+   // for (string x : myVector)
+   // {
+   //    cout << x << ", ";
+   // }
+   AVLTree tree2(tree);
    cout << tree << endl;
+   cout << "\n\n";
+   cout << tree2 << endl;
    //  cout << tree << endl;
-   //   cout << tree.insert(50, "Fifty");
-   //   // This should print 0, because it returns false (no duplicates allowed):
-   //   cout << tree.insert(50, "Another fifty");
-   //   cout << tree.insert(100, "One hundred");
-   //   cout << tree.insert(200, "Two hundred") << endl; // single rotate left
-   //   cout << tree << endl;
-   //   // cout << "hello" << endl;
+   //    cout << tree << endl;
+   //     cout << tree.insert(50, "Fifty");
+   //     // This should print 0, because it returns false (no duplicates allowed):
+   //     cout << tree.insert(50, "Another fifty");
+   //     cout << tree.insert(100, "One hundred");
+   //     cout << tree.insert(200, "Two hundred") << endl; // single rotate left
+   //     cout << tree << endl;
+   //     // cout << "hello" << endl;
 
    // cout << tree.insert(40, "Fourty");
    // cout << tree.insert(30, "Thirty"); // single rotate right
