@@ -157,7 +157,8 @@ bool AVLTree::find(int key, string &value)
       {
          currentNode = currentNode->left;
       }
-      if (currentNode->key < key)
+      // Check if currentNode is not nullptr, in case previous if changed it
+      if (currentNode && currentNode->key < key)
       {
          currentNode = currentNode->right;
       }
@@ -165,11 +166,49 @@ bool AVLTree::find(int key, string &value)
    value = to_string(key) + " not found";
    return 0;
 }
+
+std::vector<string> AVLTree::findRange(int lowkey, int highkey)
+{
+   vector<string> range_results;
+   // If tree is null no point in searching
+   if (!getSize())
+      return range_results;
+   string value;
+   for (int i = lowkey; i <= highkey; i++)
+   {
+      if (find(i, value))
+      {
+         range_results.push_back(value);
+      }
+   }
+   return range_results;
+}
 ostream &operator<<(ostream &os, const AVLTree &me)
 {
    return me.inorderPrint(os, me.root, 1);
 }
+// Ask about this
+AVLTree &AVLTree::operator=(const AVLTree &copyMe)
+{
+   // Remove everything first.
 
+   copyHelper(copyMe.root, copyMe);
+   return *this;
+}
+
+void AVLTree::copyHelper(TreeNode *node, const AVLTree &copyMe)
+{
+   if (!node)
+      return;
+   if (node == copyMe.root)
+      insert(node->key, node->value);
+   if (node->left)
+      insert(node->left->key, node->left->value);
+   if (node->right)
+      insert(node->right->key, node->right->value);
+   copyHelper(node->left, copyMe);
+   copyHelper(node->right, copyMe);
+}
 ostream &AVLTree::inorderPrint(ostream &os, TreeNode *node, int depth) const
 {
    if (!node)

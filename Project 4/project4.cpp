@@ -8,28 +8,39 @@ int main()
 {
 
    AVLTree tree;
-   cout << tree.insert(50, "Fifty");
-   // This should print 0, because it returns false (no duplicates allowed):
-   cout << tree.insert(50, "Another fifty");
-   cout << tree.insert(100, "One hundred");
-   cout << tree.insert(200, "Two hundred") << endl; // single rotate left
-   cout << tree << endl;
-   // cout << "hello" << endl;
+   tree.insert(9, "Nine");
+   tree.insert(12, "");
+   tree.insert(20, "Twenty");
+   tree.insert(35, "Thirty Five");
+   tree.insert(45, "I love fay");
 
-   cout << tree.insert(40, "Fourty");
-   cout << tree.insert(30, "Thirty"); // single rotate right
-   cout << tree.insert(150, "One hundred fifty");
-   cout << tree.insert(175, "One hundred seventy-five"); // double rotate right
-   cout << tree.insert(35, "Thirty-five");
-   cout << tree.insert(34, "Thirty-four");       // double rotate left
-   cout << tree.insert(50, "Fifty yet again");   // should be 0
-   cout << tree.insert(34, "Thirty-four again"); // should be 0;
-   cout << tree.insert(200, "Two hundred");      // should be 0;
-   //                                                  // Expect: 1011111111000
-   // cout << "breakpoint" << endl;
-   cout << "\n\n";
-
+   // vector<string> myVector = tree.findRange(0, 50);
+   // for (auto i = myVector.begin(); i != myVector.end(); i++)
+   //    cout << *i << endl;
    cout << tree << endl;
+   //  cout << tree << endl;
+   //   cout << tree.insert(50, "Fifty");
+   //   // This should print 0, because it returns false (no duplicates allowed):
+   //   cout << tree.insert(50, "Another fifty");
+   //   cout << tree.insert(100, "One hundred");
+   //   cout << tree.insert(200, "Two hundred") << endl; // single rotate left
+   //   cout << tree << endl;
+   //   // cout << "hello" << endl;
+
+   // cout << tree.insert(40, "Fourty");
+   // cout << tree.insert(30, "Thirty"); // single rotate right
+   // cout << tree.insert(150, "One hundred fifty");
+   // cout << tree.insert(175, "One hundred seventy-five"); // double rotate right
+   // cout << tree.insert(35, "Thirty-five");
+   // cout << tree.insert(34, "Thirty-four");       // double rotate left
+   // cout << tree.insert(50, "Fifty yet again");   // should be 0
+   // cout << tree.insert(34, "Thirty-four again"); // should be 0;
+   // cout << tree.insert(200, "Two hundred");      // should be 0;
+   // //                                                  // Expect: 1011111111000
+   // // cout << "breakpoint" << endl;
+   // cout << "\n\n";
+
+   // cout << tree << endl;
    // cout << tree.getSize() << endl;   // 9
    // cout << tree.getHeight() << endl; // 3
 
