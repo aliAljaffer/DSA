@@ -195,10 +195,12 @@ void AVLTree::findRangeHelper(TreeNode *node, int lowkey, int highkey, vector<st
    if (!node)
       return;
 
-   findRangeHelper(node->left, lowkey, highkey, rangeResults);
+   if (node->key > lowkey)
+      findRangeHelper(node->left, lowkey, highkey, rangeResults);
    if (node->key >= lowkey && node->key <= highkey)
       rangeResults.push_back(node->value);
-   findRangeHelper(node->right, lowkey, highkey, rangeResults);
+   if (node->key < highkey)
+      findRangeHelper(node->right, lowkey, highkey, rangeResults);
 }
 
 ostream &operator<<(ostream &os, const AVLTree &me)
@@ -216,7 +218,6 @@ void AVLTree::bulldozer(TreeNode *node)
    bulldozer(node->left);
    bulldozer(node->right);
    delete node;
-   size--;
 }
 // Ask about this
 AVLTree &AVLTree::operator=(const AVLTree &copyMe)

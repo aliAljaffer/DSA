@@ -2,11 +2,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
+#include <time.h>
 using namespace std;
-
+void memory();
 int main()
 {
-
    AVLTree tree;
    // cout << tree << endl;
    tree.insert(40, "Forty");
@@ -15,15 +16,18 @@ int main()
    tree.insert(10, "Ten");
    tree.insert(45, "Forty Five");
    tree.insert(30, "Thirty");
-   // vector<string> myVector = tree.findRange(50, 47);
+   // vector<string> myVector = tree.findRange(20, 47);
    // for (string x : myVector)
    // {
    //    cout << x << ", ";
    // }
-   AVLTree tree2(tree);
-   cout << tree << endl;
-   cout << "\n\n";
-   cout << tree2 << endl;
+   system("pause");
+   memory();
+   system("pause");
+   // AVLTree tree2(tree);
+   // cout << tree << endl;
+   // cout << "\n\n";
+   // cout << tree2 << endl;
    //  cout << tree << endl;
    //    cout << tree << endl;
    //     cout << tree.insert(50, "Fifty");
@@ -87,4 +91,16 @@ int main()
    // cout << "\n\n"
    //      << endl;
    // return 0;
+}
+
+void memory()
+{
+   srand(time(NULL));
+   AVLTree tree;
+   for (int i = 1; i < 10000000; i++)
+   {
+      tree.insert((rand() % i), to_string(i));
+   }
+
+   cout << "Check Mem" << endl;
 }
