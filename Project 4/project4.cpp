@@ -21,9 +21,17 @@ int main()
    // {
    //    cout << x << ", ";
    // }
+   string v;
+   AVLTree tree2 = tree;
+   tree.insert(5, "Five");
+   cout << tree << endl;
+   cout << tree2 << endl;
+   tree.find(120, v);
+   cout << v << endl;
    system("pause");
    memory();
    system("pause");
+   cout << "Wa";
    // AVLTree tree2(tree);
    // cout << tree << endl;
    // cout << "\n\n";

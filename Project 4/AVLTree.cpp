@@ -16,8 +16,10 @@ AVLTree::~AVLTree()
 // If I kill *this* do I still own the memory?
 AVLTree::AVLTree(const AVLTree &copyMe)
 {
+   // If tree has nodes, kill them
    if (size)
       bulldozer(root);
+   // reset everything
    size = 0;
    height = 0;
    root = nullptr;
@@ -223,6 +225,13 @@ void AVLTree::bulldozer(TreeNode *node)
 AVLTree &AVLTree::operator=(const AVLTree &copyMe)
 {
    // Remove everything first.
+   if (size)
+      bulldozer(root);
+   size = 0;
+   height = 0;
+   root = nullptr;
+   if (copyMe.size)
+      copyHelper(copyMe.root, copyMe);
    bulldozer(root);
    copyHelper(copyMe.root, copyMe);
    return *this;
@@ -334,13 +343,16 @@ AVLTree::TreeNode *AVLTree::SingleRightRotation(TreeNode *node)
 
 AVLTree::TreeNode *AVLTree::SingleLeftRotation(TreeNode *node)
 {
+   // Save the right left child in order to use it later after rotating
    TreeNode *rightLeftChild = node->right->left;
    if (node->parent)
    {
+      // If the node has a parent, replace its current child(this node) with the right child of the node
       replaceChild(node->parent, node, node->right);
    }
    else
    {
+      // If it doesn't have a parent, then it's a rotation at the root
       root = node->right;
       root->parent = nullptr;
    }
