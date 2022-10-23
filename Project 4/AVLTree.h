@@ -5,10 +5,12 @@
 #include <vector>
 using namespace std;
 /*
-Write rebalance
-write findBalance method
+ * Ali Aljaffer - CS3100 - UID: U01006515
+ * Project 4 - AVL Tree
+ * An AVL tree implementation that uses the
+ * given requirements in the PDF.
+ */
 
-*/
 class AVLTree
 {
 private:
@@ -55,7 +57,6 @@ public:
    AVLTree();
    ~AVLTree();
    AVLTree(const AVLTree &);
-   // TreeNode *search(int);
    bool insert(int, string);
    bool insertBST(int, string);
    bool rebalanceTree(TreeNode *);
