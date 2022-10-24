@@ -5,7 +5,9 @@
 #include <random>
 #include <time.h>
 using namespace std;
+
 void memory();
+
 int main()
 {
    AVLTree tree;
@@ -21,6 +23,7 @@ int main()
    {
       cout << x << ", ";
    }
+   cout << endl;
    string v;
    // AVLTree tree2 = tree;
    //  tree.insert(5, "Five");
@@ -28,22 +31,22 @@ int main()
    //  cout << tree2 << endl;
    //  tree.find(120, v);
    //  cout << v << endl;
-   //  system("pause");
-   //  memory();
-   //  system("pause");
-   cout << "Wa";
-   AVLTree tree2(tree);
-   cout << tree << endl;
-   cout << "\n\n";
-   cout << tree2 << endl;
-   cout << tree << endl;
-   cout << tree << endl;
-   cout << tree.insert(50, "Fifty");
-   // This should print 0, because it returns false (no duplicates allowed):
-   cout << tree.insert(50, "Another fifty");
-   cout << tree.insert(100, "One hundred");
-   cout << tree.insert(200, "Two hundred") << endl; // single rotate left
-   cout << tree << endl;
+   system("pause");
+   memory();
+   system("pause");
+   // cout << "Wa";
+   // AVLTree tree2(tree);
+   // cout << tree << endl;
+   // cout << "\n\n";
+   // cout << tree2 << endl;
+   // cout << tree << endl;
+   // cout << tree << endl;
+   // cout << tree.insert(50, "Fifty");
+   // // This should print 0, because it returns false (no duplicates allowed):
+   // cout << tree.insert(50, "Another fifty");
+   // cout << tree.insert(100, "One hundred");
+   // cout << tree.insert(200, "Two hundred") << endl; // single rotate left
+   // cout << tree << endl;
    // cout << "hello" << endl;
 
    // cout << tree.insert(40, "Fourty");
@@ -107,8 +110,8 @@ void memory()
    AVLTree tree;
    for (int i = 1; i < 10000000; i++)
    {
-      tree.insert((rand() % i), to_string(i));
+      tree.insert((rand() % 10), to_string(i));
    }
-
+   cout << tree << endl;
    cout << "Check Mem" << endl;
 }

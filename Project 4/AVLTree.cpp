@@ -3,8 +3,9 @@ using namespace std;
 /*
  * Ali Aljaffer - CS3100 - UID: U01006515
  *          Project 4 - AVL Tree
- * An AVL tree implementation that uses the
- * given requirements in the PDF.
+ * A map implementation that uses int:string
+ * and its functions are implemented according
+ * to the given requirements of the provided PDF.
  */
 /// @brief No args constructor
 AVLTree::AVLTree()
@@ -24,31 +25,37 @@ AVLTree::~AVLTree()
 /// @param copyMe
 AVLTree::AVLTree(const AVLTree &copyMe)
 {
-   // reset everything
+   // reset everything and then copy
    size = 0;
    height = 0;
    root = nullptr;
    if (copyMe.size)
       copyHelper(copyMe.root, copyMe);
 }
+/// @brief Inserts a new node with the given key integer and the given value string
+/// @param key the key to insert
+/// @param value the value associated with the key
+/// @return 1 on successful insertion, 0 on failure(duplicate key)
 bool AVLTree::insert(int key, string value)
 {
    TreeNode *nodeToInsert = new TreeNode(key, value);
    if (root == nullptr)
    {
+      // Case when inserting the first node on an empty tree
       root = nodeToInsert;
       size++;
       return 1;
    }
    TreeNode *currentNode = root;
-   // Currently this is for bst
+
    while (currentNode != nullptr)
    {
       if (currentNode->key <= key)
       {
          if (currentNode->key == key)
          {
-            // Duplicate key
+            // reject duplicate key, delete the unused node
+            delete nodeToInsert;
             return 0;
          }
          if (currentNode->right == nullptr)
@@ -72,7 +79,7 @@ bool AVLTree::insert(int key, string value)
             currentNode = currentNode->left;
       }
    }
-
+   // start node balancing from parent and going up to root
    currentNode = nodeToInsert->parent;
    while (currentNode)
    {
@@ -83,6 +90,9 @@ bool AVLTree::insert(int key, string value)
    return 1;
 }
 
+/// @brief This function is responsible for keeping the tree balanced and calling the rotations when needed.
+/// @param node the node to balance
+/// @return 1 on successful balance. Currently no 0 returns.
 bool AVLTree::rebalanceTree(TreeNode *node)
 {
    updateNodeHeight(node);
@@ -94,10 +104,10 @@ bool AVLTree::rebalanceTree(TreeNode *node)
       int rightNodeBalance = getBalance(node->right);
       if (rightNodeBalance == 1)
       {
-         // Case when doulbe rotating to the left: SRR(on node->right), SLR
+         // Case when double rotating to the left: SRR(on node->right), SLR
          SingleRightRotation(node->right);
       }
-      // return rotateLeft on node
+      // rotateLeft on node
       SingleLeftRotation(node);
       return 1;
    }
@@ -112,13 +122,17 @@ bool AVLTree::rebalanceTree(TreeNode *node)
          // Rotate left
          SingleLeftRotation(node->left);
       }
-      // return rotateRight
+      // rotateRight
       SingleRightRotation(node);
       return 1;
    }
    return 1;
 }
 
+/// @brief searches for the given key in the tree and if found, stores the node's value inside of the given string
+/// @param key the key to find
+/// @param value reference to a string that will be changed
+/// @return 1 if the tree has the key, 0 if the key is not present in the tree
 bool AVLTree::find(int key, string &value)
 {
    TreeNode *currentNode = root;
@@ -126,6 +140,7 @@ bool AVLTree::find(int key, string &value)
    {
       if (currentNode->key == key)
       {
+         // Found!
          value = currentNode->value;
          return 1;
       }
@@ -133,12 +148,13 @@ bool AVLTree::find(int key, string &value)
       {
          currentNode = currentNode->left;
       }
-      // Check if currentNode is not nullptr, in case previous if changed it
+      // Check if currentNode is not nullptr, in case previous ifs changed it
       if (currentNode && currentNode->key < key)
       {
          currentNode = currentNode->right;
       }
    }
+   // Loop finished without returning => not found
    value = to_string(key) + " not found";
    return 0;
 }

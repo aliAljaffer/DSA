@@ -1,14 +1,15 @@
 #include <string>
 #include <iostream>
 #include <exception>
-#pragma once
 #include <vector>
+#pragma once
 using namespace std;
 /*
  * Ali Aljaffer - CS3100 - UID: U01006515
- * Project 4 - AVL Tree
- * An AVL tree implementation that uses the
- * given requirements in the PDF.
+ *          Project 4 - AVL Tree
+ * A map implementation that uses int:string
+ * and its functions are implemented according
+ * to the given requirements of the provided PDF.
  */
 
 class AVLTree
@@ -58,10 +59,10 @@ public:
    ~AVLTree();
    AVLTree(const AVLTree &);
    bool insert(int, string);
-   bool insertBST(int, string);
    bool rebalanceTree(TreeNode *);
    int getHeight();
    int getSize();
+   int getBalance(TreeNode *);
    friend ostream &operator<<(ostream &, const AVLTree &);
    bool find(int, string &);
    ostream &inorderPrint(ostream &, TreeNode *, int) const;
@@ -73,7 +74,6 @@ public:
    TreeNode *SingleLeftRotation(TreeNode *);
    void bulldozer(TreeNode *);
    void updateNodeHeight(TreeNode *);
-   int getBalance(TreeNode *);
    bool replaceChild(TreeNode *, TreeNode *, TreeNode *);
    bool setChild(TreeNode *, string, TreeNode *);
 };
