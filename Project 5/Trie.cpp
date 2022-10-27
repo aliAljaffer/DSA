@@ -6,14 +6,15 @@ using namespace std;
 Trie::Trie()
 {
    root = new TrieNode();
-   count = 1;
-   size = 0;
+   numWords = 0;
+   numNodes = 1;
 }
 Trie::~Trie()
 {
 }
 bool Trie::insert(string word)
 {
+   // Find here
    TrieNode *curr = root;
    for (int i = 0; i < word.length(); i++)
    {
@@ -21,13 +22,14 @@ bool Trie::insert(string word)
       if (!curr->alphabet[index])
       {
          curr->alphabet[index] = new TrieNode();
-         size++;
+         numNodes++;
          curr = curr->alphabet[index];
       }
       else
-         curr = curr->alphabet[word[i] - 'a'];
+         curr = curr->alphabet[index];
    }
+
    curr->endOfWordNode = true;
-   count++; // One word added
+   numWords++; // One word added
    return 1;
 }
