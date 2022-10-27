@@ -1,0 +1,12 @@
+{
+  "makefile.launchConfigurations": [
+    {
+      "cwd": "c:\\Users\\Ali\\Desktop\\VSCode projects\\CS3100-PROJECTS\\Project 5",
+      "binaryPath": "c:\\Users\\Ali\\Desktop\\VSCode projects\\CS3100-PROJECTS\\Project 5\\main.exe",
+      "binaryArgs": []
+    }
+  ],
+  "files.associations": {
+    "new": "cpp"
+  }
+}
