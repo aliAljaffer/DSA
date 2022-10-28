@@ -4,11 +4,11 @@
 #include <random>
 #include "Trie.h"
 #include <fstream>
-void fileReader(string, Trie *);
+void populateTrie(string, Trie *);
 int main()
 {
    Trie *tr = new Trie;
-   fileReader("words.txt", tr);
+   populateTrie("words.txt", tr);
 
    vector<string> result;
    while (1)
@@ -54,7 +54,7 @@ int main()
    //  }
 }
 
-void fileReader(string filename, Trie *myTrie)
+void populateTrie(string filename, Trie *myTrie)
 {
    ifstream infile(filename);
    string word;

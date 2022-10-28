@@ -80,7 +80,7 @@ bool Trie::find(string word)
 bool Trie::insert(string word)
 {
    word = lower(word);
-   if (find(word) || word.length() == 0)
+   if (word.length() == 0)
       return 0;
    TrieNode *curr = root;
    for (int i = 0; i < word.length(); i++)
