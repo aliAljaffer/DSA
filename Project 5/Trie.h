@@ -45,7 +45,9 @@ public:
    // int getSize();
    // int getBalance(TrieNode *);
    // friend ostream &operator<<(ostream &, const Trie &);
-   // bool find(int, string &);
+   bool find(string);
+   string traverse(TrieNode *, string, vector<string> &);
+   vector<string> autocomplete(string, vector<string> &);
    // ostream &inorderPrint(ostream &, TrieNode *, int) const;
    // std::vector<string> findRange(int, int);
    // void findRangeHelper(TrieNode *, int, int, vector<string> &);
