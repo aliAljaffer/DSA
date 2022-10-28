@@ -32,6 +32,11 @@ private:
 
       ~TrieNode()
       {
+         for (int i = 0; i < ALPHABET_SIZE; i++)
+         {
+            delete alphabet[i];
+         }
+         delete alphabet;
       }
    };
    TrieNode *root;
@@ -45,6 +50,7 @@ public:
    int getSize();
    int getNumWords();
    int getNumNodes();
+   int completeCount(string);
    bool find(string);
    string lower(string);
    void traverse(TrieNode *, string, vector<string> &);

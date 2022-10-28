@@ -43,6 +43,8 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
       // Makes sure that results is empty.
       results.clear();
    }
+   if (wordToComplete.length() == 0)
+      return results;
    wordToComplete = lower(wordToComplete);
    TrieNode *curr = root;
    for (int i = 0; i < wordToComplete.length(); i++)
@@ -57,8 +59,15 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
    traverse(curr, wordToComplete, results);
    return results;
 }
+int Trie::completeCount(string word)
+{
+   vector<string> tempVec;
+   return autocomplete(word, tempVec).size();
+}
 bool Trie::find(string word)
 {
+   if (numWords == 0)
+      return false;
    word = lower(word);
    TrieNode *curr = root;
    for (int i = 0; i < word.length(); i++)

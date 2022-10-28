@@ -33,11 +33,10 @@ int main()
          return 0;
       if (userAnswer[0] == 'Y' || userAnswer[0] == 'y')
       {
-         int i = 1;
+         cout << "----------------" << endl;
          for (auto x : result)
          {
-            cout << "\t" + to_string(i) << ". " + x << endl;
-            i++;
+            cout << "\t" + x << endl;
          }
       }
    }
