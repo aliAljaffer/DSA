@@ -12,6 +12,21 @@ Trie::Trie()
 Trie::~Trie()
 {
 }
+
+Trie::TrieNode *Trie::findLastNode(string word)
+{
+   TrieNode *curr = root;
+   for (int i = 0; i < word.length(); i++)
+   {
+      int index = word[i] - 'a';
+      if (!curr->alphabet[index])
+      {
+         return nullptr;
+      }
+      curr = curr->alphabet[index];
+   }
+   return curr;
+}
 void Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
 {
    if (!node)
@@ -33,35 +48,27 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
       // Makes sure that results is empty.
       results.clear();
    }
-   TrieNode *curr = root;
-   for (int i = 0; i < wordToComplete.length(); i++)
+   TrieNode *curr = findLastNode(wordToComplete);
+   if (!curr)
    {
-      int index = wordToComplete[i] - 'a';
-      if (!curr->alphabet[index])
-      {
-         return results;
-      }
-      curr = curr->alphabet[index];
+      // If curr is null then the word given doesn't exist in the trie
+      return results;
    }
    traverse(curr, wordToComplete, results);
    return results;
 }
 bool Trie::find(string word)
 {
-   TrieNode *curr = root;
-   for (int i = 0; i < word.length(); i++)
-   {
-      int index = word[i] - 'a';
-      if (!curr->alphabet[index])
-      {
-         return 0;
-      }
-      curr = curr->alphabet[index];
-   }
+   TrieNode *curr = findLastNode(word);
+   // if curr is null, word isnt in the trie
+   if (!curr)
+      return 0;
+   // if last node is the end of the word, return true
    if (curr->endOfWordNode)
    {
       return 1;
    }
+   // its not the end of the word, false
    return 0;
 }
 
@@ -91,4 +98,20 @@ bool Trie::insert(string word)
    curr->endOfWordNode = true;
    numWords++; // One word added
    return 1;
+}
+int Trie::getCount()
+{
+   return getNumWords();
+}
+int Trie::getSize()
+{
+   return getNumNodes();
+}
+int Trie::getNumWords()
+{
+   return numWords;
+}
+int Trie::getNumNodes()
+{
+   return numNodes;
 }

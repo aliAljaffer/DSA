@@ -15,7 +15,7 @@ int main()
    tr.insert("hunger");
    tr.insert("house");
    vector<string> result;
-   tr.autocomplete("he", result);
+   tr.autocomplete("h", result);
    for (auto x : result)
    {
       cout << x << endl;
