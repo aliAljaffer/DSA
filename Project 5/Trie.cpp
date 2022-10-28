@@ -89,7 +89,12 @@ bool Trie::insert(string word)
    word = lower(word);
    if (find(word) || word.length() == 0)
       return 0;
-   TrieNode *curr = root;
+
+   TrieNode *curr = findLastNode(word);
+   if (!curr)
+   {
+      curr = root;
+   }
    for (int i = 0; i < word.length(); i++)
    {
       int index = word[i] - 'a';
