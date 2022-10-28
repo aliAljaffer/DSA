@@ -1,4 +1,5 @@
 #include "Trie.h"
+
 using namespace std;
 /*
  * Ali Aljaffer - CS3100 - UID: U01006515
@@ -12,9 +13,18 @@ Trie::Trie()
 Trie::~Trie()
 {
 }
-
+string Trie::lower(string word)
+{
+   string lowerCaseWord = "";
+   for (char c : word)
+   {
+      lowerCaseWord += c;
+   }
+   return lowerCaseWord;
+}
 Trie::TrieNode *Trie::findLastNode(string word)
 {
+   word = lower(word);
    TrieNode *curr = root;
    for (int i = 0; i < word.length(); i++)
    {
@@ -48,6 +58,7 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
       // Makes sure that results is empty.
       results.clear();
    }
+   wordToComplete = lower(wordToComplete);
    TrieNode *curr = findLastNode(wordToComplete);
    if (!curr)
    {
@@ -59,6 +70,7 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
 }
 bool Trie::find(string word)
 {
+   word = lower(word);
    TrieNode *curr = findLastNode(word);
    // if curr is null, word isnt in the trie
    if (!curr)
@@ -74,6 +86,7 @@ bool Trie::find(string word)
 
 bool Trie::insert(string word)
 {
+   word = lower(word);
    if (find(word) || word.length() == 0)
       return 0;
    TrieNode *curr = root;

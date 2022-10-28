@@ -46,6 +46,7 @@ public:
    int getNumWords();
    int getNumNodes();
    bool find(string);
+   string lower(string);
    TrieNode *findLastNode(string);
    void traverse(TrieNode *, string, vector<string> &);
    vector<string> autocomplete(string, vector<string> &);
