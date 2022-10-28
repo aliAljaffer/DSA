@@ -6,16 +6,16 @@ using namespace std;
 Trie::Trie()
 {
    root = new TrieNode();
-   numWords = 1;
-   numNodes = 0;
+   numWords = 0;
+   numNodes = 1;
 }
 Trie::~Trie()
 {
 }
-string Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
+void Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
 {
    if (!node)
-      return "";
+      return;
    for (int i = 0; i < ALPHABET_SIZE; i++)
    {
       if (node->alphabet[i] != nullptr)
@@ -25,10 +25,14 @@ string Trie::traverse(TrieNode *node, string carryString, vector<string> &result
    }
    if (node->endOfWordNode)
       results.push_back(carryString);
-   return "";
 }
 vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results)
 {
+   if (results.size() > 0)
+   {
+      // Makes sure that results is empty.
+      results.clear();
+   }
    TrieNode *curr = root;
    for (int i = 0; i < wordToComplete.length(); i++)
    {

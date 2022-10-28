@@ -11,9 +11,11 @@ int main()
    tr.insert("hea");
    tr.insert("here");
    tr.insert("heal");
-   tr.insert("fine");
+   tr.insert("hangar");
+   tr.insert("hunger");
+   tr.insert("house");
    vector<string> result;
-   tr.autocomplete("1", result);
+   tr.autocomplete("he", result);
    for (auto x : result)
    {
       cout << x << endl;
