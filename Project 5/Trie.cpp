@@ -6,8 +6,8 @@ using namespace std;
 Trie::Trie()
 {
    root = new TrieNode();
-   count = 0;
-   size = 1;
+   numWords = 1;
+   numNodes = 0;
 }
 Trie::~Trie()
 {
@@ -77,13 +77,14 @@ bool Trie::insert(string word)
       if (!curr->alphabet[index])
       {
          curr->alphabet[index] = new TrieNode();
-         size++;
+         numNodes++;
          curr = curr->alphabet[index];
       }
       else
          curr = curr->alphabet[index];
    }
+
    curr->endOfWordNode = true;
-   count++; // One word added
+   numWords++; // One word added
    return 1;
 }

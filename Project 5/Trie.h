@@ -13,8 +13,8 @@ using namespace std;
 class Trie
 {
 private:
-   int count;
-   int size;
+   int numWords;
+   int numNodes;
    class TrieNode
    {
    public:
