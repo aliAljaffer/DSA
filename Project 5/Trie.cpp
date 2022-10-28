@@ -22,21 +22,6 @@ string Trie::lower(string word)
    }
    return lowerCaseWord;
 }
-Trie::TrieNode *Trie::findLastNode(string word)
-{
-   word = lower(word);
-   TrieNode *curr = root;
-   for (int i = 0; i < word.length(); i++)
-   {
-      int index = word[i] - 'a';
-      if (!curr->alphabet[index])
-      {
-         return nullptr;
-      }
-      curr = curr->alphabet[index];
-   }
-   return curr;
-}
 void Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
 {
    if (!node)
@@ -59,11 +44,15 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
       results.clear();
    }
    wordToComplete = lower(wordToComplete);
-   TrieNode *curr = findLastNode(wordToComplete);
-   if (!curr)
+   TrieNode *curr = root;
+   for (int i = 0; i < wordToComplete.length(); i++)
    {
-      // If curr is null then the word given doesn't exist in the trie
-      return results;
+      int index = wordToComplete[i] - 'a';
+      if (!curr->alphabet[index])
+      {
+         return results;
+      }
+      curr = curr->alphabet[index];
    }
    traverse(curr, wordToComplete, results);
    return results;
@@ -71,16 +60,20 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
 bool Trie::find(string word)
 {
    word = lower(word);
-   TrieNode *curr = findLastNode(word);
-   // if curr is null, word isnt in the trie
-   if (!curr)
-      return 0;
-   // if last node is the end of the word, return true
+   TrieNode *curr = root;
+   for (int i = 0; i < word.length(); i++)
+   {
+      int index = word[i] - 'a';
+      if (!curr->alphabet[index])
+      {
+         return 0;
+      }
+      curr = curr->alphabet[index];
+   }
    if (curr->endOfWordNode)
    {
       return 1;
    }
-   // its not the end of the word, false
    return 0;
 }
 
@@ -89,12 +82,7 @@ bool Trie::insert(string word)
    word = lower(word);
    if (find(word) || word.length() == 0)
       return 0;
-
-   TrieNode *curr = findLastNode(word);
-   if (!curr)
-   {
-      curr = root;
-   }
+   TrieNode *curr = root;
    for (int i = 0; i < word.length(); i++)
    {
       int index = word[i] - 'a';
@@ -112,7 +100,6 @@ bool Trie::insert(string word)
       else
          curr = curr->alphabet[index];
    }
-
    curr->endOfWordNode = true;
    numWords++; // One word added
    return 1;
