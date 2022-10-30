@@ -10,8 +10,46 @@ Trie::Trie()
    numWords = 0;
    numNodes = 1;
 }
+Trie::Trie(const Trie &copyMe)
+{
+   root = new TrieNode();
+   numWords = 0;
+   numNodes = 1;
+   copyHelper(copyMe, copyMe.root, root);
+}
 Trie::~Trie()
 {
+   destruct(root);
+}
+void Trie::destruct(TrieNode *node)
+{
+   for (int i = 0; i < ALPHABET_SIZE; i++)
+   {
+      if (node->alphabet[i])
+         destruct(node->alphabet[i]);
+   }
+   delete node;
+}
+void Trie::copyHelper(const Trie &copyMe, TrieNode *nodeCopy, TrieNode *curr)
+{
+   if (!copyMe.numNodes || !nodeCopy->alphabet)
+   {
+      return;
+   }
+   for (int i = 0; i < ALPHABET_SIZE; i++)
+   {
+      if (nodeCopy->alphabet[i])
+      {
+         curr->alphabet[i] = new TrieNode();
+         if (nodeCopy->alphabet[i]->endOfWordNode)
+         {
+            curr->alphabet[i]->endOfWordNode = true;
+            numWords++;
+         }
+         numNodes++;
+      }
+      copyHelper(copyMe, nodeCopy->alphabet[i], curr->alphabet[i]);
+   }
 }
 string Trie::lower(string word)
 {
@@ -22,16 +60,16 @@ string Trie::lower(string word)
    }
    return lowerCaseWord;
 }
+
 void Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
 {
    if (!node)
+
       return;
    for (int i = 0; i < ALPHABET_SIZE; i++)
    {
       if (node->alphabet[i] != nullptr)
-      {
          traverse(node->alphabet[i], carryString + (char)('a' + i), results);
-      }
    }
    if (node->endOfWordNode)
       results.push_back(carryString);
@@ -59,10 +97,14 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
    traverse(curr, wordToComplete, results);
    return results;
 }
-int Trie::completeCount(string word)
+vector<string> Trie::complete(string word)
 {
    vector<string> tempVec;
-   return autocomplete(word, tempVec).size();
+   return autocomplete(word, tempVec);
+}
+int Trie::completeCount(string word)
+{
+   return complete(word).size();
 }
 bool Trie::find(string word)
 {
