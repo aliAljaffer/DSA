@@ -23,6 +23,8 @@ Trie::~Trie()
 }
 void Trie::destruct(TrieNode *node)
 {
+   if (!node)
+      return;
    for (int i = 0; i < ALPHABET_SIZE; i++)
    {
       if (node->alphabet[i])
