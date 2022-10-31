@@ -53,7 +53,7 @@ public:
    void traverse(TrieNode *, string, vector<string> &);
    vector<string> autocomplete(string, vector<string> &);
    vector<string> complete(string);
-   // Trie &operator=(const Trie &);
+   Trie &operator=(const Trie &);
    // void copyHelper(TrieNode *, const Trie &);
    // void bulldozer(TrieNode *);
 };

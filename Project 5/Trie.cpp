@@ -32,6 +32,15 @@ void Trie::destruct(TrieNode *node)
    }
    delete node;
 }
+
+Trie &Trie::operator=(const Trie &copyMe)
+{
+   destruct(root);
+   root = new TrieNode;
+   numNodes = 1;
+   copyHelper(copyMe, copyMe.root, root);
+}
+
 void Trie::copyHelper(const Trie &copyMe, TrieNode *nodeCopy, TrieNode *curr)
 {
    if (!copyMe.numNodes || !nodeCopy->alphabet)
