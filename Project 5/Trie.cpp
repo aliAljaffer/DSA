@@ -39,6 +39,7 @@ Trie &Trie::operator=(const Trie &copyMe)
    root = new TrieNode;
    numNodes = 1;
    copyHelper(copyMe, copyMe.root, root);
+   return *this;
 }
 
 void Trie::copyHelper(const Trie &copyMe, TrieNode *nodeCopy, TrieNode *curr)

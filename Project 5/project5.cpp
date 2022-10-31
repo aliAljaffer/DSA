@@ -56,9 +56,9 @@ int main()
    {
       string userWord;
       string userAnswer;
-      cout << "Enter a word you'd like to autocomplete (enter \"byebye\" to terminate)" << endl;
+      cout << "Enter a word you'd like to autocomplete (enter \"!\" to terminate)" << endl;
       cin >> userWord;
-      if (userWord == "byebye")
+      if (userWord == "!")
          return 0;
       result = tr->complete(userWord);
       int numWords = result.size();
@@ -70,7 +70,7 @@ int main()
       }
       else
          cout << "There are no words that start with " << userWord << endl;
-      if (userAnswer == "byebye")
+      if (userAnswer == "!")
          return 0;
       if (userAnswer[0] == 'Y' || userAnswer[0] == 'y')
       {
