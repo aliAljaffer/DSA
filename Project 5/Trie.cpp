@@ -23,7 +23,8 @@ Trie::~Trie()
 }
 void Trie::destruct(TrieNode *node)
 {
-   if (!node)
+   // Looping forever
+   if (!node->alphabet)
       return;
    for (int i = 0; i < ALPHABET_SIZE; i++)
    {
@@ -59,8 +60,8 @@ void Trie::copyHelper(const Trie &copyMe, TrieNode *nodeCopy, TrieNode *curr)
             numWords++;
          }
          numNodes++;
+         copyHelper(copyMe, nodeCopy->alphabet[i], curr->alphabet[i]);
       }
-      copyHelper(copyMe, nodeCopy->alphabet[i], curr->alphabet[i]);
    }
 }
 string Trie::lower(string word)
@@ -142,6 +143,8 @@ bool Trie::find(string word)
 
 bool Trie::insert(string word)
 {
+   if (find(word))
+      return 0;
    word = lower(word);
    if (word.length() == 0)
       return 0;
@@ -158,10 +161,8 @@ bool Trie::insert(string word)
       {
          curr->alphabet[index] = new TrieNode();
          numNodes++;
-         curr = curr->alphabet[index];
       }
-      else
-         curr = curr->alphabet[index];
+      curr = curr->alphabet[index];
    }
    curr->endOfWordNode = true;
    numWords++; // One word added

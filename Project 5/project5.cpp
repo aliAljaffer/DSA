@@ -6,22 +6,25 @@
 #include <fstream>
 void populateTrie(string, Trie *);
 void memTest();
-// int main()
-// {
-//    Trie tr;
-//    ifstream infile("words.txt");
-//    string word;
-//    while (infile >> word)
-//    {
-//       tr.insert(word);
-//    }
-
-//    memTest();
-//    cout << "Trie deleted" << endl;
-//    Trie tr2(tr);
-//    cout << tr.completeCount("a") << endl;
-//    cout << tr2.completeCount("a") << endl;
-// }
+int main()
+{
+   Trie *tr = new Trie;
+   // ifstream infile("words.txt");
+   // string word;
+   // while (infile >> word)
+   // {
+   //    tr.insert(word);
+   // }
+   tr->insert("a");
+   tr->insert("a");
+   cout << tr->completeCount("a");
+   delete tr;
+   memTest();
+   cout << "Trie deleted" << endl;
+   // Trie tr2(tr);
+   // cout << tr.completeCount("a") << endl;
+   // cout << tr2.completeCount("a") << endl;
+}
 
 void populateTrie(string filename, Trie *myTrie)
 {
@@ -31,6 +34,7 @@ void populateTrie(string filename, Trie *myTrie)
    {
       myTrie->insert(word);
    }
+   infile.close();
 }
 
 void memTest()
@@ -45,44 +49,44 @@ void memTest()
    cout << "About to delete trie" << endl;
 }
 
-// MAIN METHOD
-int main()
-{
-   Trie *tr = new Trie;
-   populateTrie("words.txt", tr);
+// // MAIN METHOD
+// int main()
+// {
+//    Trie *tr = new Trie;
+//    populateTrie("words.txt", tr);
 
-   vector<string> result;
-   while (1)
-   {
-      string userWord;
-      string userAnswer;
-      cout << "Enter a word you'd like to autocomplete (enter \"!\" to terminate)" << endl;
-      cin >> userWord;
-      if (userWord == "!")
-         return 0;
-      result = tr->complete(userWord);
-      int numWords = result.size();
-      if (numWords)
-      {
-         cout << "There are " << to_string(numWords) << " words that start with " << userWord << endl;
-         cout << "Would you like to display them?" << endl;
-         cin >> userAnswer;
-      }
-      else
-         cout << "There are no words that start with " << userWord << endl;
-      if (userAnswer == "!")
-         return 0;
-      if (userAnswer[0] == 'Y' || userAnswer[0] == 'y')
-      {
-         cout << "----------------" << endl;
-         for (auto x : result)
-         {
-            cout << "\t" + x << endl;
-         }
-      }
-   }
-}
-//    // Trie tr;
+//    vector<string> result;
+//    while (1)
+//    {
+//       string userWord;
+//       string userAnswer;
+//       cout << "Enter a word you'd like to autocomplete (enter \"!\" to terminate)" << endl;
+//       cin >> userWord;
+//       if (userWord == "!")
+//          return 0;
+//       result = tr->complete(userWord);
+//       int numWords = result.size();
+//       if (numWords)
+//       {
+//          cout << "There are " << to_string(numWords) << " words that start with " << userWord << endl;
+//          cout << "Would you like to display them?" << endl;
+//          cin >> userAnswer;
+//       }
+//       else
+//          cout << "There are no words that start with " << userWord << endl;
+//       if (userAnswer == "!")
+//          return 0;
+//       if (userAnswer[0] == 'Y' || userAnswer[0] == 'y')
+//       {
+//          cout << "----------------" << endl;
+//          for (auto x : result)
+//          {
+//             cout << "\t" + x << endl;
+//          }
+//       }
+//    }
+// }
+// //    // Trie tr;
 //    //  tr.insert("five");
 //    //  tr.insert("fire");
 //    //  tr.insert("free");
