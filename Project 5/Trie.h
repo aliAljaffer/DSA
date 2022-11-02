@@ -38,8 +38,10 @@ private:
 
 public:
    Trie();
+   Trie(string);
    ~Trie();
    Trie(const Trie &);
+   bool readFromFile(string);
    void destruct(TrieNode *);
    bool insert(string);
    void copyHelper(const Trie &, TrieNode *, TrieNode *);

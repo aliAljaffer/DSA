@@ -8,17 +8,17 @@ void populateTrie(string, Trie *);
 void memTest();
 int main()
 {
-   Trie *tr = new Trie;
+   Trie tr("words.txt");
    // ifstream infile("words.txt");
    // string word;
    // while (infile >> word)
    // {
    //    tr.insert(word);
-   // }
-   tr->insert("a");
-   tr->insert("a");
-   cout << tr->completeCount("a");
-   delete tr;
+   // // }
+   // tr->insert("a");
+   // tr->insert("a");
+   cout << tr.completeCount("a") << endl;
+   // delete tr;
    memTest();
    cout << "Trie deleted" << endl;
    // Trie tr2(tr);

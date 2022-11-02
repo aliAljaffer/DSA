@@ -1,4 +1,5 @@
 #include "Trie.h"
+#include <fstream>
 // Issues: Destructor going into ptr array after deletion
 //         Check insert to make sure it's not using find first
 using namespace std;
@@ -10,6 +11,13 @@ Trie::Trie()
    root = new TrieNode();
    numWords = 0;
    numNodes = 1;
+}
+Trie::Trie(string fileName)
+{
+   root = new TrieNode();
+   numWords = 0;
+   numNodes = 1;
+   readFromFile(fileName);
 }
 Trie::Trie(const Trie &copyMe)
 {
@@ -176,6 +184,18 @@ bool Trie::insert(string word)
    }
 
    return 0;
+}
+
+bool Trie::readFromFile(string fileName)
+{
+   ifstream infile(fileName);
+   string word;
+   while (infile >> word)
+   {
+      insert(word);
+   }
+   infile.close();
+   return 1;
 }
 int Trie::getCount()
 {
