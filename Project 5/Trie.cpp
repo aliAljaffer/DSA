@@ -1,5 +1,6 @@
 #include "Trie.h"
-
+// Issues: Destructor going into ptr array after deletion
+//         Check insert to make sure it's not using find first
 using namespace std;
 /*
  * Ali Aljaffer - CS3100 - UID: U01006515
@@ -143,8 +144,9 @@ bool Trie::find(string word)
 
 bool Trie::insert(string word)
 {
-   if (find(word))
-      return 0;
+   // Want to avoid running find first
+   // if (find(word))
+   //    return 0;
    word = lower(word);
    if (word.length() == 0)
       return 0;
@@ -154,7 +156,7 @@ bool Trie::insert(string word)
       int index = word[i] - 'a';
       if (index < 0 || index > 25)
       {
-         // Ensures that the letter is small.
+         // Ensures that the letter is smallcase.
          return false;
       }
       if (!curr->alphabet[index])
@@ -164,9 +166,16 @@ bool Trie::insert(string word)
       }
       curr = curr->alphabet[index];
    }
-   curr->endOfWordNode = true;
-   numWords++; // One word added
-   return 1;
+   if (!curr->endOfWordNode)
+   {
+      // if the most recently created node for the word(last letter) is not an end of word, then the
+      // word we just went through is new and therefore we increment numWords and set endOFWord to true
+      curr->endOfWordNode = true;
+      numWords++;
+      return 1;
+   }
+
+   return 0;
 }
 int Trie::getCount()
 {
