@@ -89,6 +89,9 @@ void Trie::copyHelper(const Trie &copyMe, TrieNode *nodeCopy, TrieNode *curr)
       }
    }
 }
+/// @brief Changes a word to lowercase
+/// @param word the word to turn to uppercase
+/// @return the final uppercase word
 string Trie::lower(string word)
 {
    string lowerCaseWord = "";
@@ -99,6 +102,10 @@ string Trie::lower(string word)
    return lowerCaseWord;
 }
 
+/// @brief
+/// @param node
+/// @param carryString
+/// @param results
 void Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
 {
    if (!node)
@@ -168,9 +175,6 @@ bool Trie::find(string word)
 
 bool Trie::insert(string word)
 {
-   // Want to avoid running find first
-   // if (find(word))
-   //    return 0;
    word = lower(word);
    if (word.length() == 0)
       return 0;

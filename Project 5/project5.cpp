@@ -4,19 +4,21 @@
 #include <random>
 #include "Trie.h"
 #include <fstream>
+#include <time.h>
 void populateTrie(string, Trie *);
 void memTest();
 int main()
 {
-   Trie tr;
-   tr.insert("ali");
-   tr.insert("aaa");
-   Trie tr2(tr);
-   Trie tr3 = tr;
-   tr.insert("abc");
-   tr2.insert("cba");
-   tr3.insert("aa");
-   cout << "done" << endl;
+   srand(time(NULL));
+   // Trie tr;
+   // tr.insert("ali");
+   // tr.insert("aaa");
+   // Trie tr2(tr);
+   // Trie tr3 = tr;
+   // tr.insert("abc");
+   // tr2.insert("cba");
+   // tr3.insert("aa");
+   // cout << "done" << endl;
    // ifstream infile("words.txt");
    // string word;
    // while (infile >> word)
@@ -25,7 +27,7 @@ int main()
    // // }
    // tr->insert("a");
    // tr->insert("a");
-   cout << tr.completeCount("a") << endl;
+   // cout << tr.completeCount("a") << endl;
    // delete tr;
    for (int i = 0; i < 10; i++)
       memTest();
@@ -49,12 +51,26 @@ void populateTrie(string filename, Trie *myTrie)
 void memTest()
 {
    Trie tr;
-   ifstream infile("words.txt");
-   string word;
-   while (infile >> word)
+
+   // ifstream infile("words.txt");
+
+   for (int i = 0; i < 10000; i++)
    {
+      string word = "";
+      for (int j = 0; j < 10; j++)
+      {
+         int random = rand() % 26;
+         char ranC = 'a' + random;
+         word += ranC;
+      }
       tr.insert(word);
+      word.empty();
    }
+
+   // while (infile >> word)
+   // {
+   //    tr.insert(word);
+   // }
    cout << "About to delete trie" << endl;
 }
 
@@ -95,7 +111,7 @@ void memTest()
 //       }
 //    }
 // }
-// //    // Trie tr;
+// // //    // Trie tr;
 //    //  tr.insert("five");
 //    //  tr.insert("fire");
 //    //  tr.insert("free");
