@@ -6,12 +6,16 @@ using namespace std;
 /*
  * Ali Aljaffer - CS3100 - UID: U01006515
  */
+
+/// @brief No args constructor creates the root and sets the class fields.
 Trie::Trie()
 {
    root = new TrieNode();
    numWords = 0;
    numNodes = 1;
 }
+/// @brief Given a fileName, a trie is created using the content of the text file
+/// @param fileName the path to the file containing the words to insert into the trie
 Trie::Trie(string fileName)
 {
    root = new TrieNode();
@@ -19,6 +23,8 @@ Trie::Trie(string fileName)
    numNodes = 1;
    readFromFile(fileName);
 }
+/// @brief Copy constructor for a Trie
+/// @param copyMe The trie to copy from
 Trie::Trie(const Trie &copyMe)
 {
    root = new TrieNode();
@@ -26,10 +32,13 @@ Trie::Trie(const Trie &copyMe)
    numNodes = 1;
    copyHelper(copyMe, copyMe.root, root);
 }
+/// @brief Trie destructor that uses a helper function destruct()
 Trie::~Trie()
 {
    destruct(root);
 }
+/// @brief Recursive destructor function that visits each node until it reaches a leaf child and deletes it
+/// @param node The starting point for destruction
 void Trie::destruct(TrieNode *node)
 {
    if (!node)
@@ -43,6 +52,9 @@ void Trie::destruct(TrieNode *node)
    delete node;
 }
 
+/// @brief Overloaded operator = that functions the same as a copy constructor, but it destroys the left hand side trie first
+/// @param copyMe The trie to copy
+/// @return returns the Trie after copying
 Trie &Trie::operator=(const Trie &copyMe)
 {
    destruct(root);
@@ -52,6 +64,10 @@ Trie &Trie::operator=(const Trie &copyMe)
    return *this;
 }
 
+/// @brief Copy helper function for use with copy constructor and assignment operator overload
+/// @param copyMe The trie to copy
+/// @param nodeCopy the node to copy from copyMe
+/// @param curr the current node in this trie
 void Trie::copyHelper(const Trie &copyMe, TrieNode *nodeCopy, TrieNode *curr)
 {
    if (!copyMe.numNodes || !nodeCopy)
