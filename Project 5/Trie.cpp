@@ -32,13 +32,13 @@ Trie::~Trie()
 }
 void Trie::destruct(TrieNode *node)
 {
-   // Looping forever
-   if (!node->alphabet)
+   if (!node)
       return;
    for (int i = 0; i < ALPHABET_SIZE; i++)
    {
       if (node->alphabet[i])
          destruct(node->alphabet[i]);
+      node->alphabet[i] = nullptr;
    }
    delete node;
 }
@@ -54,7 +54,7 @@ Trie &Trie::operator=(const Trie &copyMe)
 
 void Trie::copyHelper(const Trie &copyMe, TrieNode *nodeCopy, TrieNode *curr)
 {
-   if (!copyMe.numNodes || !nodeCopy->alphabet)
+   if (!copyMe.numNodes || !nodeCopy)
    {
       return;
    }
@@ -86,11 +86,11 @@ string Trie::lower(string word)
 void Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
 {
    if (!node)
-
       return;
+
    for (int i = 0; i < ALPHABET_SIZE; i++)
    {
-      if (node->alphabet[i] != nullptr)
+      if (node->alphabet[i])
          traverse(node->alphabet[i], carryString + (char)('a' + i), results);
    }
    if (node->endOfWordNode)

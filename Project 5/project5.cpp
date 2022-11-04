@@ -8,7 +8,15 @@ void populateTrie(string, Trie *);
 void memTest();
 int main()
 {
-   Trie tr("words.txt");
+   Trie tr;
+   tr.insert("ali");
+   tr.insert("aaa");
+   Trie tr2(tr);
+   Trie tr3 = tr;
+   tr.insert("abc");
+   tr2.insert("cba");
+   tr3.insert("aa");
+   cout << "done" << endl;
    // ifstream infile("words.txt");
    // string word;
    // while (infile >> word)
@@ -19,7 +27,8 @@ int main()
    // tr->insert("a");
    cout << tr.completeCount("a") << endl;
    // delete tr;
-   memTest();
+   for (int i = 0; i < 10; i++)
+      memTest();
    cout << "Trie deleted" << endl;
    // Trie tr2(tr);
    // cout << tr.completeCount("a") << endl;

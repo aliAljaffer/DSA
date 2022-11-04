@@ -27,35 +27,34 @@ private:
          {
             alphabet[i] = nullptr;
          }
-         endOfWordNode = 0;
+         endOfWordNode = false;
       }
 
       ~TrieNode()
       {
       }
    };
+
    TrieNode *root;
+   void copyHelper(const Trie &, TrieNode *, TrieNode *);
+   bool readFromFile(string);
+   void destruct(TrieNode *);
+   string lower(string);
+   void traverse(TrieNode *, string, vector<string> &);
+   vector<string> autocomplete(string, vector<string> &);
 
 public:
    Trie();
    Trie(string);
    ~Trie();
    Trie(const Trie &);
-   bool readFromFile(string);
-   void destruct(TrieNode *);
    bool insert(string);
-   void copyHelper(const Trie &, TrieNode *, TrieNode *);
    int getCount();
    int getSize();
    int getNumWords();
    int getNumNodes();
    int completeCount(string);
    bool find(string);
-   string lower(string);
-   void traverse(TrieNode *, string, vector<string> &);
-   vector<string> autocomplete(string, vector<string> &);
    vector<string> complete(string);
    Trie &operator=(const Trie &);
-   // void copyHelper(TrieNode *, const Trie &);
-   // void bulldozer(TrieNode *);
 };
