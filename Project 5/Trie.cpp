@@ -1,10 +1,10 @@
 #include "Trie.h"
 #include <fstream>
-// Issues: Destructor going into ptr array after deletion
-//         Check insert to make sure it's not using find first
 using namespace std;
 /*
  * Ali Aljaffer - CS3100 - UID: U01006515
+ * Alphabet trie implementation that uses lowercase
+ * letters.
  */
 
 /// @brief No args constructor creates the root and sets the class fields.
@@ -23,6 +23,7 @@ Trie::Trie(string fileName)
    numNodes = 1;
    readFromFile(fileName);
 }
+
 /// @brief Copy constructor for a Trie
 /// @param copyMe The trie to copy from
 Trie::Trie(const Trie &copyMe)
@@ -97,15 +98,15 @@ string Trie::lower(string word)
    string lowerCaseWord = "";
    for (char c : word)
    {
-      lowerCaseWord += c;
+      lowerCaseWord += tolower(c);
    }
    return lowerCaseWord;
 }
 
-/// @brief
-/// @param node
-/// @param carryString
-/// @param results
+/// @brief Traverses the trie and adds the words it encounters
+/// @param node the node to start traversing from
+/// @param carryString the string to complete
+/// @param results a vector of all the valid words that were encountered
 void Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
 {
    if (!node)
@@ -119,6 +120,10 @@ void Trie::traverse(TrieNode *node, string carryString, vector<string> &results)
    if (node->endOfWordNode)
       results.push_back(carryString);
 }
+/// @brief A helper function for complete.
+/// @param wordToComplete the given prefix
+/// @param results the results vector
+/// @return a vector that contains the valid words found. returns empty if word isnt in trie
 vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results)
 {
    if (results.size() > 0)
@@ -142,18 +147,27 @@ vector<string> Trie::autocomplete(string wordToComplete, vector<string> &results
    traverse(curr, wordToComplete, results);
    return results;
 }
+/// @brief completes the given word
+/// @param word the word to complete
+/// @return the vector resulting from the helper function autocomplete
 vector<string> Trie::complete(string word)
 {
    vector<string> tempVec;
    return autocomplete(word, tempVec);
 }
+/// @brief runs the complete function on the word and returns its size
+/// @param word the word to complete
+/// @return the size of the vector resulting from completing the given word
 int Trie::completeCount(string word)
 {
    return complete(word).size();
 }
+/// @brief finds a given word in the trie
+/// @param word the word to find
+/// @return true if found, false if not.
 bool Trie::find(string word)
 {
-   if (numWords == 0)
+   if (numWords == 0 || word.length() == 0)
       return false;
    word = lower(word);
    TrieNode *curr = root;
@@ -162,22 +176,25 @@ bool Trie::find(string word)
       int index = word[i] - 'a';
       if (!curr->alphabet[index])
       {
-         return 0;
+         return false;
       }
       curr = curr->alphabet[index];
    }
    if (curr->endOfWordNode)
    {
-      return 1;
+      return true;
    }
-   return 0;
+   return false;
 }
 
+/// @brief Inserts a given word in the trie. Does not accept duplicates.
+/// @param word the word to insert
+/// @return true if inserted, false if insertion failed (i.e. due to duplication)
 bool Trie::insert(string word)
 {
    word = lower(word);
    if (word.length() == 0)
-      return 0;
+      return false;
    TrieNode *curr = root;
    for (int i = 0; i < word.length(); i++)
    {
@@ -200,12 +217,15 @@ bool Trie::insert(string word)
       // word we just went through is new and therefore we increment numWords and set endOFWord to true
       curr->endOfWordNode = true;
       numWords++;
-      return 1;
+      return true;
    }
 
-   return 0;
+   return false;
 }
 
+/// @brief Given a file name, will try to read line by line and insert each line into the trie
+/// @param fileName path to the file name that contains the words
+/// @return true on success
 bool Trie::readFromFile(string fileName)
 {
    ifstream infile(fileName);
@@ -215,20 +235,29 @@ bool Trie::readFromFile(string fileName)
       insert(word);
    }
    infile.close();
-   return 1;
+   return true;
 }
-int Trie::getCount()
+/// @brief getter function for the number of words in the trie
+/// @return the number of words in the trie
+int Trie::count()
 {
    return getNumWords();
 }
+
+/// @brief getter function for the number of nodes in the trie
+/// @return number of node in the trie
 int Trie::getSize()
 {
    return getNumNodes();
 }
+/// @brief getter function for the number of words in the trie
+/// @return the number of words in the trie
 int Trie::getNumWords()
 {
    return numWords;
 }
+/// @brief getter function for the number of nodes in the trie
+/// @return number of node in the trie
 int Trie::getNumNodes()
 {
    return numNodes;

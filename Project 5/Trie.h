@@ -7,7 +7,8 @@
 using namespace std;
 /*
  * Ali Aljaffer - CS3100 - UID: U01006515
-
+ * Alphabet trie implementation that uses lowercase
+ * letters.
  */
 
 class Trie
@@ -49,7 +50,7 @@ public:
    ~Trie();
    Trie(const Trie &);
    bool insert(string);
-   int getCount();
+   int count();
    int getSize();
    int getNumWords();
    int getNumNodes();
