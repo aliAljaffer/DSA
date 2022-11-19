@@ -8,7 +8,7 @@ class HashTable
 {
 private:
    int offsets[MAXHASH - 1];
-   Slot *slots[MAXHASH];
+   Slot slots[MAXHASH];
 
 public:
    HashTable();
