@@ -1,6 +1,10 @@
 #include "HashTable.h"
 #include <algorithm>
-// HashTable ->
+/*
+ * Ali Aljaffer - CS3100 - UID: U01006515
+ * Database implementation using jsHash as a hash function
+ * and psuedo-random probing.
+ */
 HashTable::HashTable()
 {
    slotsOccupied = 0;
@@ -47,6 +51,10 @@ bool HashTable::insert(int key, int index, int &collisions)
          return false;
       probe = (homePosition + offsets[collisions]) % MAXHASH;
       collisions++;
+   }
+   if (collisions == MAXHASH - 1)
+   {
+      return false;
    }
    slots[probe].load(key, index); // use setters
    slotsOccupied++;

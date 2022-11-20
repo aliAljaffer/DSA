@@ -4,7 +4,11 @@
 #include <iomanip>
 
 using namespace std;
-
+/*
+ * Ali Aljaffer - CS3100 - UID: U01006515
+ * Database implementation using jsHash as a hash function
+ * and psuedo-random probing.
+ */
 // Each record holds a student's first and
 // last names, their UID (an integer), and
 // their year (a string)

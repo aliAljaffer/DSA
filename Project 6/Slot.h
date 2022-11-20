@@ -4,7 +4,11 @@
 #include <iomanip>
 
 using namespace std;
-
+/*
+ * Ali Aljaffer - CS3100 - UID: U01006515
+ * Database implementation using jsHash as a hash function
+ * and psuedo-random probing.
+ */
 // There are three types of slots in a closed hash:
 // Normal slots, empty (since start) slots, and emptyAfterRemovals (i.e. tombstones)
 enum SlotType

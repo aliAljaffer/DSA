@@ -3,7 +3,11 @@
 #include "Record.h"
 #include "hashfunction.h"
 #define MAXHASH 20
-
+/*
+ * Ali Aljaffer - CS3100 - UID: U01006515
+ * Database implementation using jsHash as a hash function
+ * and psuedo-random probing.
+ */
 class HashTable
 {
 private:

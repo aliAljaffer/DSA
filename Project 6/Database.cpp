@@ -1,6 +1,11 @@
 #include "Database.h"
 #include "Record.h"
 #include "HashTable.h"
+/*
+ * Ali Aljaffer - CS3100 - UID: U01006515
+ * Database implementation using jsHash as a hash function
+ * and psuedo-random probing.
+ */
 Database::Database()
 {
    indexTable = HashTable();
@@ -29,9 +34,13 @@ bool Database::insert(const Record &newRecord, int &collisions)
    indexTable.findInHashTable(newRecord.getUID(), index);
    if (index != -1)
       return false;
-   recordStore.push_back(newRecord);
-   indexTable.insert(newRecord.getUID(), recordStore.size() - 1, collisions);
-   return true;
+
+   if (indexTable.insert(newRecord.getUID(), recordStore.size(), collisions))
+   {
+      recordStore.push_back(newRecord);
+      return true;
+   }
+   return false;
 }
 
 bool Database::remove(int key)
@@ -83,7 +92,7 @@ ostream &operator<<(ostream &os, const Database &printMe)
       Record currentRecord = printMe.recordStore[i];
       int indexInHashTable = 0;
       printMe.indexTable.findInHashTable(currentRecord.getUID(), indexInHashTable);
-      os << "HashTable Slot: " << to_string(indexInHashTable) << ", recordStore slot " << to_string(i) << " -- " << currentRecord << endl;
+      os << "HashTable Slot:\t" << to_string(indexInHashTable) << "\t--\trecordStore slot:\t" << to_string(i) << "\t--\t" << currentRecord << endl;
    }
    return os;
 }

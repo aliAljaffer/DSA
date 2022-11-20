@@ -6,6 +6,11 @@
 #include <vector>
 #define MAXHASH 20
 using namespace std;
+/*
+ * Ali Aljaffer - CS3100 - UID: U01006515
+ * Database implementation using jsHash as a hash function
+ * and psuedo-random probing.
+ */
 class Database
 {
 private:
