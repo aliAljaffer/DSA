@@ -48,6 +48,7 @@ bool Database::remove(int key)
    int indexInHashTable = 0;
    indexTable.findInHashTable(toDelete.getUID(), indexInHashTable);
    indexTable.adjustSlotIndex(indexInHashTable, indexInRecordStore);
+   recordStore.pop_back();
    return true;
 }
 bool Database::find(int uid, Record &foundRecord, int &collisions)
