@@ -69,7 +69,7 @@ public:
 	}
 
 	// Set the index of a slot to a new value
-	int setIndex(int newIndex)
+	void setIndex(int newIndex)
 	{
 		index = newIndex;
 	}

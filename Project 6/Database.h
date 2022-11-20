@@ -13,6 +13,9 @@ private:
    vector<Record> recordStore;
 
 public:
+   Database();
+   Database(const HashTable &);
+   ~Database();
    bool insert(const Record &newRecord, int &collisions);
    bool remove(int key);
    bool find(int uid, Record &foundRecord, int &collisions);
