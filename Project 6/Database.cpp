@@ -44,10 +44,12 @@ bool Database::remove(int key)
    }
    int indexInRecordStore = 0;
    indexTable.find(toDelete.getUID(), indexInRecordStore, collisions);
+   indexTable.remove(toDelete.getUID());
    toDelete.recordCopy(recordStore[recordStore.size() - 1]);
    int indexInHashTable = 0;
    indexTable.findInHashTable(toDelete.getUID(), indexInHashTable);
    indexTable.adjustSlotIndex(indexInHashTable, indexInRecordStore);
+   recordStore[indexInRecordStore] = toDelete;
    recordStore.pop_back();
    return true;
 }
@@ -73,6 +75,11 @@ ostream &operator<<(ostream &os, const Database &printMe)
 
    for (int i = 0; i < printMe.recordStore.size(); i++)
    {
+      if (i == 0)
+      {
+         os << "Database contents:\n--------------------\n"
+            << endl;
+      }
       Record currentRecord = printMe.recordStore[i];
       int indexInHashTable = 0;
       printMe.indexTable.findInHashTable(currentRecord.getUID(), indexInHashTable);

@@ -7,28 +7,72 @@ int main()
    Database db;
    int collisions = 0;
    string userChoice;
-   cout << "Would you like to (I)nsert or (D)elete a record, (S)earch for a record, \n(P)rint the database, or (Q) uit ? " << endl;
-   cin >> userChoice;
-   if (userChoice[0] == 'i')
+   while (userChoice[0] != 'Q')
    {
-      string firstName, lastName, year;
-      int uid;
-      cout << "Inserting a new record." << endl;
-      cout << "Last name: " << endl;
-      cin >> lastName;
-      cout << "First name: " << endl;
-      cin >> firstName;
-      cout << "UID: " << endl;
-      cin >> uid;
-      cout << "Year: " << endl;
-      cin >> year;
-      Record toAdd(firstName, lastName, uid, year);
-      if (db.insert(toAdd, collisions))
+      cout << "\nWould you like to (I)nsert or (D)elete a record, (S)earch for a record, \n(P)rint the database, or (Q) uit ? " << endl;
+      cin >> userChoice;
+      if (userChoice[0] == 'I')
       {
-         cout << "Record inserted successfully. (" << to_string(collisions) << " collisions occured).";
+         string firstName, lastName, year;
+         int uid;
+         cout << "Inserting a new record." << endl;
+         cout << "Last name: ";
+         cin >> lastName;
+         cout << "\nFirst name: ";
+         cin >> firstName;
+         cout << "\nUID: ";
+         cin >> uid;
+         cout << "\nYear: ";
+         cin >> year;
+         Record toAdd(firstName, lastName, uid, year);
+         if (db.insert(toAdd, collisions))
+         {
+            cout << "\nRecord inserted successfully. (" << to_string(collisions) << " collisions occured)." << endl;
+         }
+         else
+            cout << "\nError: Unable to insert. Either the UID is a duplicate or the database is full." << endl;
       }
-      else
-         cout << "Unable to insert. Either the UID is a duplicate or the database is full.";
+      else if (userChoice[0] == 'D')
+      {
+         int uid = -1;
+         cout << "Deleting a record. \nWhat's the UID for the record? ";
+         cin >> uid;
+         cout << "\nRemoving UID: " << to_string(uid) << " from the database... ";
+         if (db.remove(uid))
+         {
+            cout << "Successfully removed." << endl;
+         }
+         else
+            cout << "Error: UID does not exist in the database." << endl;
+      }
+      else if (userChoice[0] == 'S')
+      {
+         int uid = -1;
+         int collisions = 0;
+         Record searchedFor;
+         cout << "Searching for a record. Enter UID to search for: ";
+         cin >> uid;
+         cout << "Searching... ";
+         if (db.find(uid, searchedFor, collisions))
+         {
+            cout << "Found it! Collisions: " << to_string(collisions) << "\n--------------------" << endl;
+            cout << searchedFor << endl;
+            cout << "--------------------" << endl;
+         }
+         else
+            cout << "Error: Record not found." << endl;
+      }
+      else if (userChoice[0] == 'P')
+      {
+         cout << "Printing the database...";
+         if (db.alpha() != 0)
+         {
+            cout << "\n"
+                 << db << endl;
+         }
+         else
+            cout << "Error: data base is empty." << endl;
+      }
    }
 }
 

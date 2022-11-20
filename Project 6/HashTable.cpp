@@ -31,6 +31,11 @@ int HashTable::getSlotsOccupied() const
 {
    return slotsOccupied;
 }
+void HashTable::setSlotsOccupied(int newSlotsNumber)
+{
+   slotsOccupied = newSlotsNumber;
+}
+
 bool HashTable::insert(int key, int index, int &collisions)
 {
    collisions = 0;

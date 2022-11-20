@@ -15,6 +15,7 @@ public:
    HashTable();
    ~HashTable();
    int getSlotsOccupied() const;
+   void setSlotsOccupied(int newSlotsNumber);
    bool insert(int key, int index, int &collisions);
    bool remove(int key);
    bool find(int key, int &index, int &collisions);
