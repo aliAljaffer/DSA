@@ -1,5 +1,7 @@
 #include "HashTable.h"
 #include <algorithm>
+#include <chrono>
+#include <random>
 /*
  * Ali Aljaffer - CS3100 - UID: U01006515
  * Database implementation using jsHash as a hash function
@@ -14,7 +16,8 @@ HashTable::HashTable()
       if (i < MAXHASH - 1)
          offsets[i] = i + 1;
    }
-   random_shuffle(std::begin(offsets), std::end(offsets));
+   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+   shuffle(begin(offsets), end(offsets), default_random_engine(seed));
 }
 
 HashTable::~HashTable()
