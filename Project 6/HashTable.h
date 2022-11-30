@@ -13,6 +13,7 @@ class HashTable
 private:
    int offsets[MAXHASH - 1];
    Slot slots[MAXHASH];
+   // Using slotsOccupied to keep the number of slots being occupied. I think this would be more beneficial by being O(1) access if we had a much larger hash table, because searching through the slots everytime alpha is called will be expensive. So for our MAXHASH = 20 case, this doesn't reallly do much but it's nice to have
    int slotsOccupied;
 
 public:

@@ -53,10 +53,12 @@ public:
 		string result = lastName + ", " + firstName;
 		return result;
 	}
+	// Get last name
 	string getLastName() const
 	{
 		return lastName;
 	}
+	// get first name
 	string getFirstName() const
 	{
 		return firstName;
@@ -87,6 +89,9 @@ public:
 		return os;
 	}
 
+	/// @brief Copies the information of a record
+	/// @param copyMe the record to copy
+	/// @return true after successful copy
 	bool recordCopy(const Record &copyMe)
 	{
 		this->firstName = copyMe.firstName;

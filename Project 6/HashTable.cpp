@@ -7,6 +7,8 @@
  * Database implementation using jsHash as a hash function
  * and psuedo-random probing.
  */
+
+/// @brief No args constructor that initializes the slots and offsets arrays and then randomizes the offsets
 HashTable::HashTable()
 {
    slotsOccupied = 0;
@@ -24,30 +26,41 @@ HashTable::~HashTable()
 {
 }
 
+/// @brief Occupancy of the hashtable
+/// @return 0 <= float <= 1
 float HashTable::alpha()
 {
    return (float)slotsOccupied / MAXHASH;
 }
 
+/// @brief Adjusts the value stored in a slot
+/// @param slotIndex the index of the slot to adjust
+/// @param newStoredValue the new value to change the index to
+/// @return true when successful(always)
 bool HashTable::adjustSlotIndex(int slotIndex, int newStoredValue)
 {
    slots[slotIndex].setIndex(newStoredValue);
    return true;
 }
+
+/// @brief getter for slotsOccupied
+/// @return the number of the normal slots in the hash table
 int HashTable::getSlotsOccupied() const
 {
    return slotsOccupied;
 }
-void HashTable::setSlotsOccupied(int newSlotsNumber)
-{
-   slotsOccupied = newSlotsNumber;
-}
 
+/// @brief Inserts a key into the hashtable
+/// @param key the key to insert
+/// @param index the index of the key in the database recordStore
+/// @param collisions the number of collisions encountered
+/// @return true on successful insert, false if either duplicate or if hash table is full.
 bool HashTable::insert(int key, int index, int &collisions)
 {
    collisions = 0;
    int homePosition = jsHash(key) % MAXHASH;
    int probe = homePosition;
+   // While loop finds an empty slot using the probe sequence
    while (!slots[probe].isEmpty() && collisions < MAXHASH - 1)
    {
       if (slots[probe].getKey() == key)
@@ -55,6 +68,7 @@ bool HashTable::insert(int key, int index, int &collisions)
       probe = (homePosition + offsets[collisions]) % MAXHASH;
       collisions++;
    }
+   // This check is to make sure we exited the loop because the found slot was empty, and not because we collided over the limit!
    if (collisions == MAXHASH - 1)
    {
       return false;
@@ -64,24 +78,9 @@ bool HashTable::insert(int key, int index, int &collisions)
    return true;
 }
 
-// bool HashTable::remove(int key)
-// {
-//    int homePosition = jsHash(key) % MAXHASH;
-//    int i = 0;
-//    Slot currentSlot = slots[(homePosition + offsets[i]) % MAXHASH];
-//    while (currentSlot.getKey() != key && !currentSlot.isEmptySinceStart() && i < MAXHASH - 1)
-//    {
-//       i++;
-//       currentSlot = slots[(homePosition + offsets[i]) % MAXHASH];
-//    }
-//    if (i == MAXHASH || currentSlot.isEmptySinceStart())
-//    {
-//       // Key not in hashtable
-//       return false;
-//    }
-//    currentSlot.kill();
-//    return true;
-// }
+/// @brief Removes a key from the hashtable
+/// @param key the key to remove
+/// @return true on successful removal, false if key doesn't exist in the table
 bool HashTable::remove(int key)
 {
    int index = -1;
@@ -92,6 +91,11 @@ bool HashTable::remove(int key)
    slotsOccupied--;
    return true;
 }
+
+/// @brief Similar to regular find, except that it gets the index of a key in the hashtable rather than the database vector
+/// @param key the key to find
+/// @param index we'll store the index found in this variable
+/// @return true on success, false if key doesn't exist in the hash table.
 bool HashTable::findInHashTable(int key, int &index) const
 {
    int homePosition = jsHash(key) % MAXHASH;
@@ -109,6 +113,12 @@ bool HashTable::findInHashTable(int key, int &index) const
    }
    return false;
 }
+
+/// @brief Regular find that gives us the index of the key in the vector of the database
+/// @param key the key to find
+/// @param index we'll store the index found in this variable
+/// @param collisions the number of collisions we encountered
+/// @return true on success, false if key doesn't exist in the hash table.
 bool HashTable::find(int key, int &index, int &collisions)
 {
    collisions = 0;
@@ -127,6 +137,10 @@ bool HashTable::find(int key, int &index, int &collisions)
    return false;
 }
 
+/// @brief Overloaded << operator to allow for chaining hashtables to an output stream
+/// @param os the output stream
+/// @param printMe the hashtable to print
+/// @return the output stream
 ostream &operator<<(ostream &os, const HashTable &printMe)
 {
    for (int i = 0; i < MAXHASH; i++)
