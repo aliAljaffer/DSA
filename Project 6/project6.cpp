@@ -2,7 +2,7 @@
 #include "Database.h"
 #include <iostream>
 /*
- * Ali Aljaffer - CS3100 - UID: U01006515
+ * Ali Aljaffer - CS3100
  * Database implementation using jsHash as a hash function
  * and psuedo-random probing.
  */

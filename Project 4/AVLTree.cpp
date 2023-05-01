@@ -1,7 +1,7 @@
 #include "AVLTree.h"
 using namespace std;
 /*
- * Ali Aljaffer - CS3100 - UID: U01006515
+ * Ali Aljaffer - CS3100
  *          Project 4 - AVL Tree
  * A map implementation that uses int:string
  * and its functions are implemented according

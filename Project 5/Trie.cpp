@@ -2,7 +2,7 @@
 #include <fstream>
 using namespace std;
 /*
- * Ali Aljaffer - CS3100 - UID: U01006515
+ * Ali Aljaffer - CS3100
  * Alphabet trie implementation that uses lowercase
  * letters.
  */

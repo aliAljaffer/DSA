@@ -1,6 +1,6 @@
 #include "Sequence.h"
 #include <exception>
-/* Ali Aljaffer - CS3100 - UID: U01006515
+/* Ali Aljaffer - CS3100
  * Project 3 - Double linked list
  * A class that implements the functions specified
  * in the header file.
